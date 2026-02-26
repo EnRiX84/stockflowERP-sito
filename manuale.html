@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuale d'Uso - StockFlow ERP</title>
+    <meta name="description" content="Guida completa all'utilizzo di StockFlow ERP: magazzino, vendite, gift card, trasferimenti, clienti, report, SMS e pannello SuperAdmin.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-light: #60A5FA;
+            --primary-dark: #1D4ED8;
+            --teal: #0D9488;
+            --teal-light: #2DD4BF;
+            --accent: #F97316;
+            --accent-light: #FB923C;
+            --success: #22C55E;
+            --danger: #EF4444;
+            --purple: #8B5CF6;
+            --dark: #0F172A;
+            --dark-lighter: #1E293B;
+            --dark-card: #1a2332;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --radius: 12px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+        body {
+            font-family: var(--font);
+            font-size: 16px;
+            line-height: 1.7;
+            color: #CBD5E1;
+            background: var(--dark);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: var(--primary-light); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--teal-light); }
+
+        /* ---- Navbar ---- */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0 24px; height: 64px;
+            display: flex; align-items: center;
+        }
+        .nav-inner { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+        .nav-brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 700; font-size: 18px; }
+        .nav-logo { background: linear-gradient(135deg, var(--primary), var(--teal)); color: #fff; font-weight: 800; font-size: 14px; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-back { color: var(--gray-400); font-size: 14px; transition: color 0.2s; }
+        .nav-back:hover { color: #fff; }
+        .nav-back i { margin-right: 6px; }
+
+        /* ---- Layout ---- */
+        .page { display: flex; max-width: 1200px; margin: 80px auto 0; padding: 0 24px; gap: 48px; }
+
+        /* ---- Sidebar / TOC ---- */
+        .sidebar {
+            width: 260px; flex-shrink: 0; position: sticky; top: 80px;
+            max-height: calc(100vh - 96px); overflow-y: auto;
+            padding: 24px 0;
+        }
+        .sidebar::-webkit-scrollbar { width: 3px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--dark-lighter); border-radius: 3px; }
+        .sidebar h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-500); margin-bottom: 12px; padding-left: 12px; }
+        .sidebar ul { list-style: none; }
+        .sidebar li { margin-bottom: 2px; }
+        .sidebar a {
+            display: block; padding: 7px 12px; border-radius: 8px;
+            font-size: 13.5px; color: var(--gray-400); transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+        .sidebar a:hover { color: #fff; background: rgba(255,255,255,0.04); }
+        .sidebar a.active { color: var(--primary-light); background: rgba(37, 99, 235, 0.08); border-left-color: var(--primary); }
+        .sidebar .sub { padding-left: 20px; }
+        .sidebar .sub a { font-size: 12.5px; }
+
+        /* ---- Content ---- */
+        .content { flex: 1; min-width: 0; padding: 24px 0 80px; }
+
+        .content h1 {
+            font-size: 32px; font-weight: 800; color: #fff;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff, var(--primary-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .content .subtitle { color: var(--gray-500); font-size: 16px; margin-bottom: 48px; }
+
+        .content h2 {
+            font-size: 22px; font-weight: 700; color: #fff;
+            margin-top: 56px; margin-bottom: 16px; padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .content h2 .icon {
+            width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-size: 14px; flex-shrink: 0;
+        }
+
+        .content h3 { font-size: 17px; font-weight: 600; color: #E2E8F0; margin-top: 32px; margin-bottom: 10px; }
+        .content h4 { font-size: 15px; font-weight: 600; color: #CBD5E1; margin-top: 24px; margin-bottom: 8px; }
+
+        .content p { margin-bottom: 14px; }
+        .content ul, .content ol { margin-bottom: 14px; padding-left: 20px; }
+        .content li { margin-bottom: 6px; }
+        .content ul { list-style: disc; }
+        .content ol { list-style: decimal; }
+
+        /* Callouts */
+        .tip, .warning, .info {
+            padding: 14px 18px; border-radius: var(--radius); margin: 18px 0;
+            font-size: 14px; line-height: 1.6;
+            display: flex; gap: 12px; align-items: flex-start;
+        }
+        .tip { background: rgba(13, 148, 136, 0.1); border: 1px solid rgba(13, 148, 136, 0.2); }
+        .tip i { color: var(--teal-light); margin-top: 2px; }
+        .warning { background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.2); }
+        .warning i { color: var(--accent-light); margin-top: 2px; }
+        .info { background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.2); }
+        .info i { color: var(--primary-light); margin-top: 2px; }
+
+        /* Tables */
+        .table-wrap { overflow-x: auto; margin: 18px 0; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.06); }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        thead { background: var(--dark-lighter); }
+        th { padding: 10px 16px; text-align: left; font-weight: 600; color: #E2E8F0; white-space: nowrap; }
+        td { padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.04); }
+
+        /* Tags */
+        .tag {
+            display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+            padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px;
+        }
+        .tag-blue { background: rgba(37,99,235,0.15); color: var(--primary-light); }
+        .tag-teal { background: rgba(13,148,136,0.15); color: var(--teal-light); }
+        .tag-orange { background: rgba(249,115,22,0.15); color: var(--accent-light); }
+        .tag-purple { background: rgba(139,92,246,0.15); color: #A78BFA; }
+        .tag-green { background: rgba(34,197,94,0.15); color: #4ADE80; }
+        .tag-red { background: rgba(239,68,68,0.15); color: #F87171; }
+
+        /* Key shortcuts */
+        kbd { background: var(--dark-lighter); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 1px 6px; font-size: 12px; font-family: var(--font); color: #E2E8F0; }
+
+        /* Code */
+        code { background: var(--dark-lighter); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--teal-light); }
+
+        /* Mobile hamburger TOC */
+        .mobile-toc-btn {
+            display: none; position: fixed; bottom: 24px; right: 24px; z-index: 99;
+            width: 48px; height: 48px; border-radius: 50%;
+            background: var(--primary); color: #fff; border: none;
+            font-size: 18px; cursor: pointer; box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+        }
+
+        /* Footer */
+        .manual-footer {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            text-align: center; padding: 32px 24px; color: var(--gray-500); font-size: 13px;
+        }
+        .manual-footer a { color: var(--primary-light); }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 900px) {
+            .sidebar { display: none; position: fixed; top: 0; left: 0; bottom: 0; z-index: 200; width: 280px; background: var(--dark); padding: 80px 16px 24px; border-right: 1px solid rgba(255,255,255,0.06); }
+            .sidebar.open { display: block; }
+            .mobile-toc-btn { display: flex; align-items: center; justify-content: center; }
+            .page { gap: 0; }
+            .content h1 { font-size: 26px; }
+            .content h2 { font-size: 19px; }
+            .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; }
+            .overlay.open { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">
+                <span class="nav-logo">SF</span>
+                <span>StockFlow</span>
+            </a>
+            <a href="index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Torna al sito</a>
+        </div>
+    </nav>
+
+    <!-- Overlay mobile -->
+    <div class="overlay" id="overlay" onclick="toggleToc()"></div>
+
+    <div class="page">
+        <!-- Sidebar TOC -->
+        <aside class="sidebar" id="sidebar">
+            <h4>Manuale d'uso</h4>
+            <ul>
+                <li><a href="#intro">Introduzione</a></li>
+                <li><a href="#primi-passi">Primi Passi</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#magazzino">Magazzino</a></li>
+                <li><a href="#pos">Punto Cassa (POS)</a></li>
+                <li><a href="#gift-card">Gift Card</a></li>
+                <li><a href="#trasferimenti">Trasferimenti</a></li>
+                <li><a href="#clienti">Clienti e Fidelity</a></li>
+                <li><a href="#report">Report</a></li>
+                <li><a href="#sms">SMS Marketing</a></li>
+                <li><a href="#utenti">Gestione Utenti</a></li>
+                <li><a href="#impostazioni">Impostazioni Tenant</a></li>
+                <li><a href="#superadmin" style="color: var(--accent-light); font-weight: 600;">SuperAdmin</a></li>
+                <ul class="sub">
+                    <li><a href="#sa-tenants">Gestione Tenant</a></li>
+                    <li><a href="#sa-impersonation">Impersonation</a></li>
+                    <li><a href="#sa-config">Configurazione</a></li>
+                    <li><a href="#sa-stats">Statistiche</a></li>
+                </ul>
+                <li><a href="#ruoli">Ruoli e Permessi</a></li>
+                <li><a href="#faq-manuale">FAQ</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main content -->
+        <main class="content">
+            <h1>Manuale d'Uso</h1>
+            <p class="subtitle">Guida completa a tutte le funzionalit&agrave; di StockFlow ERP</p>
+
+            <!-- =============== INTRO =============== -->
+            <section id="intro">
+                <h2><span class="icon" style="background: rgba(37,99,235,0.15); color: var(--primary-light);"><i class="fas fa-book"></i></span> Introduzione</h2>
+                <p>StockFlow ERP &egrave; un gestionale cloud multi-tenant pensato per negozi retail. Permette di gestire magazzino, vendite, gift card, clienti, trasferimenti tra sedi e molto altro, tutto dal browser.</p>
+                <p>La piattaforma supporta pi&ugrave; negozi, pi&ugrave; utenti con ruoli differenziati, e offre funzionalit&agrave; avanzate come branding personalizzato, SMS marketing e integrazione con Stripe per i pagamenti online.</p>
+                <div class="info">
+                    <i class="fas fa-circle-info"></i>
+                    <span>StockFlow funziona interamente nel browser. Non serve installare software, basta una connessione internet.</span>
+                </div>
+            </section>
+
+            <!-- =============== PRIMI PASSI =============== -->
+            <section id="primi-passi">
+                <h2><span class="icon" style="background: rgba(34,197,94,0.15); color: #4ADE80;"><i class="fas fa-rocket"></i></span> Primi Passi</h2>
+
+                <h3>Registrazione</h3>
+                <ol>
+                    <li>Vai alla pagina di registrazione e inserisci il <strong>nome della tua azienda</strong>.</li>
+                    <li>Compila nome, cognome, email e scegli una password sicura (minimo 8 caratteri, una maiuscola, un numero, un carattere speciale).</li>
+                    <li>Clicca <strong>Registrati</strong>. Il sistema crea automaticamente il tuo tenant (spazio aziendale isolato) e ti reindirizza alla configurazione iniziale.</li>
+                </ol>
+
+                <h3>Login</h3>
+                <p>Accedi con email e password dalla pagina di login. Dopo l'autenticazione verrai reindirizzato alla <strong>Dashboard</strong>.</p>
+
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Il piano <strong>Free</strong> include 1 negozio, 1 utente e fino a 50 prodotti. Puoi fare upgrade in qualsiasi momento.</span>
+                </div>
+            </section>
+
+            <!-- =============== DASHBOARD =============== -->
+            <section id="dashboard">
+                <h2><span class="icon" style="background: rgba(37,99,235,0.15); color: var(--primary-light);"><i class="fas fa-chart-line"></i></span> Dashboard</h2>
+                <p>La dashboard mostra una panoramica immediata dell'attivit&agrave;:</p>
+                <ul>
+                    <li><strong>Vendite del mese</strong> &mdash; totale e variazione percentuale</li>
+                    <li><strong>Prodotti in magazzino</strong> &mdash; conteggio totale</li>
+                    <li><strong>Gift Card attive</strong> &mdash; numero e valore</li>
+                    <li><strong>Prodotti sotto scorta</strong> &mdash; lista con quantit&agrave; minima non raggiunta</li>
+                    <li><strong>Ultimi movimenti</strong> &mdash; carico, scarico, trasferimenti recenti</li>
+                    <li><strong>Trasferimenti in sospeso</strong> &mdash; richiedono azione</li>
+                </ul>
+                <p>Seleziona il <strong>negozio attivo</strong> dal selettore in alto a destra per filtrare i dati per punto vendita.</p>
+            </section>
+
+            <!-- =============== MAGAZZINO =============== -->
+            <section id="magazzino">
+                <h2><span class="icon" style="background: rgba(13,148,136,0.15); color: var(--teal-light);"><i class="fas fa-warehouse"></i></span> Magazzino</h2>
+
+                <h3>Prodotti</h3>
+                <p>La sezione prodotti permette di creare e gestire il catalogo. Ogni prodotto ha:</p>
+                <ul>
+                    <li><strong>Nome, SKU, Barcode</strong> &mdash; identificativi univoci</li>
+                    <li><strong>Brand e Categoria</strong> &mdash; per organizzazione e filtri</li>
+                    <li><strong>Prezzo di acquisto e vendita</strong> &mdash; con calcolo margine automatico</li>
+                    <li><strong>Varianti</strong> &mdash; combinazioni di taglia, colore, fascia d'et&agrave;, stagione, genere</li>
+                </ul>
+
+                <h3>Varianti</h3>
+                <p>Ogni prodotto pu&ograve; avere pi&ugrave; varianti (es. "T-shirt Rossa Tg. M", "T-shirt Blu Tg. L"). Ogni variante ha il proprio barcode e la propria giacenza per negozio.</p>
+
+                <h3>Giacenze</h3>
+                <p>La sezione <strong>Inventario</strong> mostra la giacenza per ogni variante in ogni negozio. Puoi:</p>
+                <ul>
+                    <li><strong>Regolare la quantit&agrave;</strong> &mdash; aggiungere o togliere pezzi con motivazione</li>
+                    <li><strong>Impostare la scorta minima</strong> &mdash; ricevi avvisi in dashboard quando la quantit&agrave; scende sotto la soglia</li>
+                    <li><strong>Filtrare per negozio</strong> &mdash; vedi le giacenze del punto vendita selezionato</li>
+                </ul>
+
+                <h3>Movimenti</h3>
+                <p>Ogni variazione di giacenza genera un <strong>movimento</strong> tracciato (carico, scarico, rettifica, trasferimento, vendita, reso). Puoi cercare e filtrare i movimenti per data, tipo e prodotto.</p>
+
+                <h3>Import CSV</h3>
+                <p>Puoi importare prodotti in blocco da un file CSV (separatore punto e virgola, formato italiano). Il sistema rileva automaticamente le colonne e crea prodotti e varianti.</p>
+
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Usa la <strong>ricerca per barcode</strong> (icona scanner) per trovare prodotti e varianti in modo istantaneo.</span>
+                </div>
+            </section>
+
+            <!-- =============== POS =============== -->
+            <section id="pos">
+                <h2><span class="icon" style="background: rgba(249,115,22,0.15); color: var(--accent-light);"><i class="fas fa-cash-register"></i></span> Punto Cassa (POS)</h2>
+                <p>Il modulo vendite permette di registrare le vendite dal browser come un registratore di cassa digitale.</p>
+
+                <h3>Creare una vendita</h3>
+                <ol>
+                    <li>Seleziona il <strong>negozio</strong> da cui stai vendendo.</li>
+                    <li>Cerca i prodotti per nome, SKU o barcode e aggiungili al carrello.</li>
+                    <li>Puoi applicare <strong>sconti</strong> (percentuale o importo fisso) per riga o sull'intero totale.</li>
+                    <li>Associa un <strong>cliente</strong> (opzionale) per accumulare punti fidelity.</li>
+                    <li>Scegli il metodo di pagamento (contanti, carta, gift card, misto).</li>
+                    <li>Conferma la vendita. La giacenza viene scalata automaticamente.</li>
+                </ol>
+
+                <h3>Resi</h3>
+                <p>Per effettuare un reso, trova la vendita originale e crea un <strong>reso parziale o totale</strong>. La giacenza viene ripristinata e l'importo viene registrato come credito.</p>
+
+                <h3>Gift Card come pagamento</h3>
+                <p>&Egrave; possibile utilizzare una gift card come metodo di pagamento. Inserisci il codice della gift card e il sistema scala automaticamente il saldo disponibile.</p>
+            </section>
+
+            <!-- =============== GIFT CARD =============== -->
+            <section id="gift-card">
+                <h2><span class="icon" style="background: rgba(139,92,246,0.15); color: #A78BFA;"><i class="fas fa-gift"></i></span> Gift Card</h2>
+                <p>Le gift card digitali permettono ai clienti di acquistare buoni regalo online o in negozio.</p>
+
+                <h3>Creare una Gift Card</h3>
+                <ul>
+                    <li><strong>In negozio</strong>: dall'area Gift Card del gestionale, crea una nuova card indicando importo e destinatario.</li>
+                    <li><strong>Online</strong>: i clienti possono acquistare gift card dal sito web del negozio con pagamento Stripe.</li>
+                </ul>
+
+                <h3>Funzionamento</h3>
+                <ul>
+                    <li>Ogni gift card ha un <strong>codice univoco</strong> (es. <code>GC-XXXX-XXXX-XXXX</code>).</li>
+                    <li>Il destinatario riceve un <strong>PDF personalizzato</strong> via email con il branding del negozio.</li>
+                    <li>La gift card pu&ograve; essere usata come <strong>metodo di pagamento</strong> al POS.</li>
+                    <li>Il saldo viene scalato parzialmente (pu&ograve; essere usata in pi&ugrave; acquisti).</li>
+                    <li>Storico transazioni visibile per ogni gift card.</li>
+                </ul>
+
+                <div class="info">
+                    <i class="fas fa-circle-info"></i>
+                    <span>Senza chiavi Stripe configurate, le gift card funzionano in <strong>modalit&agrave; test</strong> (creazione diretta senza pagamento online).</span>
+                </div>
+            </section>
+
+            <!-- =============== TRASFERIMENTI =============== -->
+            <section id="trasferimenti">
+                <h2><span class="icon" style="background: rgba(37,99,235,0.15); color: var(--primary-light);"><i class="fas fa-truck"></i></span> Trasferimenti</h2>
+                <p>I trasferimenti permettono di spostare merce tra i punti vendita con un flusso controllato.</p>
+
+                <h3>Workflow</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Stato</th><th>Descrizione</th><th>Azione stock</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="tag tag-blue">BOZZA</span></td><td>Trasferimento creato, modificabile</td><td>Nessuna</td></tr>
+                            <tr><td><span class="tag tag-orange">RICHIESTO</span></td><td>Inviato per approvazione</td><td>Nessuna</td></tr>
+                            <tr><td><span class="tag tag-purple">IN TRANSITO</span></td><td>Merce spedita</td><td>Stock scalato dall'origine</td></tr>
+                            <tr><td><span class="tag tag-green">RICEVUTO</span></td><td>Merce ricevuta a destinazione</td><td>Stock aggiunto a destinazione</td></tr>
+                            <tr><td><span class="tag tag-teal">PARZ. RICEVUTO</span></td><td>Ricezione parziale</td><td>Stock parziale aggiunto</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Come creare un trasferimento</h3>
+                <ol>
+                    <li>Seleziona <strong>negozio di origine</strong> e <strong>negozio di destinazione</strong>.</li>
+                    <li>Aggiungi i prodotti/varianti con le quantit&agrave; da trasferire.</li>
+                    <li>Salva come bozza o invia direttamente la richiesta.</li>
+                    <li>Il negozio di origine <strong>spedisce</strong> &rarr; lo stock viene scalato.</li>
+                    <li>Il negozio di destinazione <strong>riceve</strong> &rarr; lo stock viene aggiunto.</li>
+                </ol>
+
+                <div class="warning">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <span>Lo stock viene scalato <strong>solo alla spedizione</strong>, non alla richiesta. Questo evita blocchi su merce ancora disponibile.</span>
+                </div>
+            </section>
+
+            <!-- =============== CLIENTI =============== -->
+            <section id="clienti">
+                <h2><span class="icon" style="background: rgba(236,72,153,0.15); color: #F472B6;"><i class="fas fa-users"></i></span> Clienti e Fidelity</h2>
+
+                <h3>Anagrafica Clienti</h3>
+                <p>Registra i clienti con nome, cognome, email, telefono e note. I clienti possono essere associati alle vendite per tracciare lo storico acquisti.</p>
+
+                <h3>Programma Fidelity</h3>
+                <p>Il sistema fidelity permette di accumulare punti ad ogni acquisto:</p>
+                <ul>
+                    <li><strong>Configurazione</strong>: imposta quanti punti per euro speso e il valore del premio.</li>
+                    <li><strong>Accumulo automatico</strong>: ad ogni vendita associata al cliente, i punti vengono aggiunti.</li>
+                    <li><strong>Riscatto</strong>: i punti possono essere convertiti in sconti al POS.</li>
+                    <li><strong>Storico punti</strong>: ogni transazione di punti &egrave; tracciata.</li>
+                </ul>
+            </section>
+
+            <!-- =============== REPORT =============== -->
+            <section id="report">
+                <h2><span class="icon" style="background: rgba(37,99,235,0.15); color: var(--primary-light);"><i class="fas fa-chart-bar"></i></span> Report</h2>
+                <p>La sezione report offre analisi dettagliate sull'attivit&agrave;:</p>
+                <ul>
+                    <li><strong>Report Stock</strong> &mdash; giacenza attuale per negozio, brand, categoria</li>
+                    <li><strong>Report Movimenti</strong> &mdash; storico movimenti filtrato per data e tipo</li>
+                    <li><strong>Vendite</strong> &mdash; totali, per periodo, per negozio</li>
+                </ul>
+
+                <h3>Export CSV</h3>
+                <p>Tutti i report possono essere esportati in formato <strong>CSV</strong> (separatore punto e virgola, ideale per Excel in italiano). Utile per il commercialista o per analisi esterne.</p>
+            </section>
+
+            <!-- =============== SMS =============== -->
+            <section id="sms">
+                <h2><span class="icon" style="background: rgba(34,197,94,0.15); color: #4ADE80;"><i class="fas fa-sms"></i></span> SMS Marketing</h2>
+                <p>Invia SMS promozionali ai tuoi clienti tramite integrazione <strong>Twilio</strong>.</p>
+                <ul>
+                    <li><strong>Template</strong>: crea modelli di messaggio riutilizzabili con variabili (nome cliente, negozio, ecc.).</li>
+                    <li><strong>Invio singolo o massivo</strong>: seleziona uno o pi&ugrave; clienti e invia il messaggio.</li>
+                    <li><strong>Log SMS</strong>: traccia ogni SMS inviato con stato di consegna.</li>
+                </ul>
+
+                <div class="warning">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <span>Per utilizzare gli SMS &egrave; necessario configurare le credenziali Twilio. Senza configurazione, il servizio non &egrave; disponibile.</span>
+                </div>
+            </section>
+
+            <!-- =============== UTENTI =============== -->
+            <section id="utenti">
+                <h2><span class="icon" style="background: rgba(13,148,136,0.15); color: var(--teal-light);"><i class="fas fa-user-gear"></i></span> Gestione Utenti</h2>
+                <p>L'amministratore del tenant pu&ograve; creare, modificare e disattivare utenti.</p>
+
+                <h3>Creare un utente</h3>
+                <ol>
+                    <li>Vai alla sezione <strong>Utenti</strong> dal menu laterale.</li>
+                    <li>Clicca <strong>Nuovo Utente</strong>.</li>
+                    <li>Inserisci email, password (requisiti: min 8 caratteri, maiuscola, numero, carattere speciale), nome, cognome.</li>
+                    <li>Seleziona il <strong>ruolo</strong> (Admin, Manager, Dipendente).</li>
+                    <li>Assegna i <strong>negozi</strong> a cui l'utente pu&ograve; accedere.</li>
+                </ol>
+
+                <p>Ogni utente pu&ograve; essere <strong>disattivato</strong> senza eliminarlo, mantenendo lo storico delle sue operazioni.</p>
+            </section>
+
+            <!-- =============== IMPOSTAZIONI =============== -->
+            <section id="impostazioni">
+                <h2><span class="icon" style="background: rgba(139,92,246,0.15); color: #A78BFA;"><i class="fas fa-cog"></i></span> Impostazioni Tenant</h2>
+                <p>Ogni tenant (azienda) pu&ograve; personalizzare la propria configurazione:</p>
+
+                <h3>Brand e Negozi</h3>
+                <ul>
+                    <li><strong>Nome azienda e logo</strong>: visibili su gift card, email e documenti.</li>
+                    <li><strong>Gestione negozi</strong>: aggiungi, modifica o disattiva punti vendita con nome, codice e citt&agrave;.</li>
+                </ul>
+
+                <h3>Brand e Categorie</h3>
+                <p>Gestisci i brand (marchi) e le categorie dei prodotti dalla sezione dedicata. Questi vengono usati come filtri nella ricerca prodotti e nei report.</p>
+            </section>
+
+            <!-- =============== SUPERADMIN =============== -->
+            <section id="superadmin">
+                <h2><span class="icon" style="background: rgba(249,115,22,0.15); color: var(--accent-light);"><i class="fas fa-shield-halved"></i></span> Pannello SuperAdmin</h2>
+                <p>Il SuperAdmin &egrave; l'amministratore globale della piattaforma. Ha accesso a <strong>tutti i tenant</strong> e pu&ograve; gestire l'intera infrastruttura di StockFlow ERP.</p>
+
+                <div class="warning">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <span>Le funzionalit&agrave; SuperAdmin sono riservate all'amministratore della piattaforma. Gli utenti normali non hanno accesso a questa sezione.</span>
+                </div>
+
+                <!-- SA TENANTS -->
+                <h3 id="sa-tenants">Gestione Tenant</h3>
+                <p>Dalla pagina <strong>Tenant</strong> (<code>/superadmin/tenants</code>) visualizzi l'elenco di tutti i tenant registrati con:</p>
+                <ul>
+                    <li><strong>Nome e slug</strong> dell'azienda</li>
+                    <li><strong>Piano</strong> attuale (Free, Starter, Business, Enterprise)</li>
+                    <li><strong>Utilizzo</strong>: negozi, utenti e prodotti creati vs. limiti</li>
+                    <li><strong>Stato</strong>: Attivo o Sospeso</li>
+                </ul>
+
+                <h4>Azioni disponibili per ogni tenant</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Azione</th><th>Icona</th><th>Descrizione</th></tr></thead>
+                        <tbody>
+                            <tr><td>Dettaglio</td><td><i class="fas fa-eye"></i></td><td>Apre la pagina di dettaglio completa</td></tr>
+                            <tr><td>Modifica rapida</td><td><i class="fas fa-pen"></i></td><td>Modifica nome, slug, piano, dominio e limiti</td></tr>
+                            <tr><td>Impersona</td><td><i class="fas fa-user-check"></i></td><td>Accede al gestionale come Admin del tenant</td></tr>
+                            <tr><td>Sospendi / Riattiva</td><td><i class="fas fa-power-off"></i></td><td>Disattiva o riattiva il tenant</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Dettaglio Tenant</h4>
+                <p>La pagina di dettaglio (<code>/superadmin/tenants/:id</code>) mostra tutto sul tenant:</p>
+                <ul>
+                    <li><strong>Informazioni generali</strong>: negozi, utenti, prodotti, dominio, data creazione</li>
+                    <li><strong>Lista utenti</strong> con ruolo e stato, e possibilit&agrave; di <strong>resettare le password</strong></li>
+                    <li><strong>Lista negozi</strong> con codice, citt&agrave; e stato</li>
+                    <li><strong>Statistiche d'utilizzo</strong>: prodotti, vendite, clienti</li>
+                    <li><strong>Piano e limiti</strong>: modifica piano e personalizza limiti</li>
+                    <li><strong>Configurazione avanzata</strong>: SMTP, branding, Stripe</li>
+                </ul>
+
+                <h4>Piani e limiti</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Piano</th><th>Negozi</th><th>Utenti</th><th>Prodotti</th><th>Gift Card</th><th>Fidelity</th><th>SMTP</th><th>Branding</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="tag tag-blue">FREE</span></td><td>1</td><td>1</td><td>50</td><td><i class="fas fa-xmark" style="color:var(--danger)"></i></td><td><i class="fas fa-xmark" style="color:var(--danger)"></i></td><td><i class="fas fa-xmark" style="color:var(--danger)"></i></td><td><i class="fas fa-xmark" style="color:var(--danger)"></i></td></tr>
+                            <tr><td><span class="tag tag-teal">STARTER</span></td><td>1</td><td>3</td><td>500</td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-xmark" style="color:var(--danger)"></i></td></tr>
+                            <tr><td><span class="tag tag-purple">BUSINESS</span></td><td>3</td><td>10</td><td>Illimitati</td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td></tr>
+                            <tr><td><span class="tag tag-orange">ENTERPRISE</span></td><td>Illimitati</td><td>Illimitati</td><td>Illimitati</td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>I limiti vengono aggiornati automaticamente quando cambi piano, ma puoi personalizzarli manualmente per ogni tenant.</p>
+
+                <!-- SA IMPERSONATION -->
+                <h3 id="sa-impersonation">Impersonation</h3>
+                <p>L'<strong>impersonation</strong> permette al SuperAdmin di accedere al gestionale come se fosse l'amministratore di un tenant specifico.</p>
+                <ol>
+                    <li>Clicca il pulsante <strong>Impersona</strong> sul tenant desiderato.</li>
+                    <li>Il sistema genera un token JWT come Admin del tenant e ti reindirizza alla dashboard.</li>
+                    <li>Un <strong>banner ambra</strong> in alto indica: <em>"Stai operando come tenant impersonato"</em>.</li>
+                    <li>Per tornare, clicca <strong>Torna a SuperAdmin</strong> nel banner.</li>
+                </ol>
+
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>L'impersonation &egrave; utile per risolvere problemi tecnici o verificare la configurazione di un tenant senza richiedere le credenziali dell'utente.</span>
+                </div>
+
+                <!-- SA CONFIG -->
+                <h3 id="sa-config">Configurazione per Tenant</h3>
+                <p>Dalla pagina di dettaglio tenant, la sezione <strong>Configurazione</strong> permette di personalizzare tre aree:</p>
+
+                <h4>SMTP (Email personalizzate)</h4>
+                <p>Configura un server SMTP dedicato per il tenant, cos&igrave; le email (ricevute gift card, notifiche) arrivano dal dominio del negozio:</p>
+                <ul>
+                    <li><strong>Host</strong>: indirizzo del server SMTP (es. <code>smtps.aruba.it</code>)</li>
+                    <li><strong>Porta</strong>: solitamente 465 (SSL) o 587 (TLS)</li>
+                    <li><strong>Utente e Password</strong>: credenziali di accesso SMTP</li>
+                    <li><strong>Mittente</strong>: nome e email del mittente (es. <code>Klein Baby &lt;noreply@kleinbaby.it&gt;</code>)</li>
+                </ul>
+
+                <h4>Branding Gift Card</h4>
+                <p>Personalizza i colori delle gift card PDF generate per il tenant:</p>
+                <ul>
+                    <li><strong>Colore primario</strong> e <strong>secondario</strong></li>
+                    <li><strong>Sfondo, testo, accento</strong></li>
+                    <li>Un'<strong>anteprima live</strong> mostra il risultato in tempo reale</li>
+                </ul>
+
+                <h4>Stripe (Pagamenti online)</h4>
+                <p>Abilita i pagamenti reali per le gift card online:</p>
+                <ul>
+                    <li><strong>Secret Key</strong>: chiave segreta Stripe (<code>sk_live_...</code> o <code>sk_test_...</code>)</li>
+                    <li><strong>Webhook Secret</strong>: per la verifica degli eventi (<code>whsec_...</code>)</li>
+                </ul>
+                <p>Senza configurazione Stripe, le gift card vengono create in <strong>modalit&agrave; test</strong> (nessun pagamento reale).</p>
+
+                <!-- SA STATS -->
+                <h3 id="sa-stats">Statistiche Piattaforma</h3>
+                <p>La pagina <strong>Statistiche</strong> (<code>/superadmin/stats</code>) mostra una panoramica globale:</p>
+                <ul>
+                    <li><strong>Tenant totali</strong> con conteggio attivi</li>
+                    <li><strong>Utenti, negozi e prodotti</strong> totali della piattaforma</li>
+                    <li><strong>Distribuzione per piano</strong>: grafico a barre con percentuali Free/Starter/Business/Enterprise</li>
+                    <li><strong>Tenant recenti</strong>: ultimi 5 tenant creati con link al dettaglio</li>
+                </ul>
+            </section>
+
+            <!-- =============== RUOLI =============== -->
+            <section id="ruoli">
+                <h2><span class="icon" style="background: rgba(13,148,136,0.15); color: var(--teal-light);"><i class="fas fa-user-shield"></i></span> Ruoli e Permessi</h2>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Ruolo</th><th>Descrizione</th><th>Permessi principali</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="tag tag-orange">SUPERADMIN</span></td>
+                                <td>Amministratore piattaforma</td>
+                                <td>Gestione tutti i tenant, impersonation, statistiche globali, configurazione SMTP/branding/Stripe</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-red">ADMIN</span></td>
+                                <td>Amministratore del tenant</td>
+                                <td>Tutto all'interno del proprio tenant: utenti, negozi, prodotti, vendite, gift card, report, impostazioni</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-purple">MANAGER</span></td>
+                                <td>Responsabile negozio</td>
+                                <td>Prodotti, movimenti, trasferimenti, vendite, report, clienti</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-blue">EMPLOYEE</span></td>
+                                <td>Dipendente</td>
+                                <td>Visualizzazione prodotti, carico/scarico, vendite</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info">
+                    <i class="fas fa-circle-info"></i>
+                    <span>Il <strong>SuperAdmin</strong> non appartiene a nessun tenant. Accede a un pannello dedicato separato dalla dashboard normale.</span>
+                </div>
+            </section>
+
+            <!-- =============== FAQ =============== -->
+            <section id="faq-manuale">
+                <h2><span class="icon" style="background: rgba(37,99,235,0.15); color: var(--primary-light);"><i class="fas fa-circle-question"></i></span> FAQ</h2>
+
+                <h4>Posso usare StockFlow da tablet?</h4>
+                <p>S&igrave;, l'interfaccia &egrave; completamente responsive. Funziona da qualsiasi browser su desktop, tablet e smartphone.</p>
+
+                <h4>Come faccio il backup dei dati?</h4>
+                <p>I dati sono nel cloud con backup automatici. Puoi anche esportare i report in CSV in qualsiasi momento.</p>
+
+                <h4>Posso avere pi&ugrave; negozi?</h4>
+                <p>S&igrave;, a partire dal piano Business (3 negozi) e Enterprise (illimitati). Ogni negozio ha le proprie giacenze e i trasferimenti sono tracciati.</p>
+
+                <h4>Come funziona la password policy?</h4>
+                <p>Tutte le password devono avere almeno <strong>8 caratteri</strong>, una <strong>lettera maiuscola</strong>, un <strong>numero</strong> e un <strong>carattere speciale</strong> (es. @, #, !).</p>
+
+                <h4>Cosa succede se un tenant viene sospeso?</h4>
+                <p>Gli utenti del tenant non possono pi&ugrave; accedere. I dati vengono mantenuti e il tenant pu&ograve; essere riattivato in qualsiasi momento dal SuperAdmin.</p>
+
+                <h4>Le gift card hanno una scadenza?</h4>
+                <p>Le gift card non scadono. Il saldo rimane disponibile fino al completo utilizzo.</p>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="manual-footer">
+        <p>&copy; 2026 StockFlow ERP &mdash; <a href="index.html">Torna al sito</a> | <a href="privacy-policy.html">Privacy Policy</a> | <a href="cookie-policy.html">Cookie Policy</a></p>
+    </footer>
+
+    <!-- Mobile TOC Button -->
+    <button class="mobile-toc-btn" id="mobileTocBtn" onclick="toggleToc()" aria-label="Indice">
+        <i class="fas fa-list"></i>
+    </button>
+
+    <script>
+        // Mobile TOC toggle
+        function toggleToc() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+        }
+
+        // Close TOC on link click (mobile)
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) toggleToc();
+            });
+        });
+
+        // Active section tracking
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.sidebar a');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
