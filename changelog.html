@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog - StockFlow ERP</title>
+    <meta name="description" content="Changelog di StockFlow ERP - Cronologia delle versioni e degli aggiornamenti della piattaforma.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cookie-consent.css">
+    <style>
+        .changelog-entry {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .changelog-entry:last-of-type {
+            border-bottom: none;
+        }
+        .changelog-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .changelog-version {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.02em;
+        }
+        .changelog-version.major {
+            background: linear-gradient(135deg, #0D9488, #14B8A6);
+        }
+        .changelog-version.feature {
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
+        }
+        .changelog-version.security {
+            background: linear-gradient(135deg, #F59E0B, #FBBF24);
+            color: #1a1a1a;
+        }
+        .changelog-version.initial {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+        }
+        .changelog-date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .changelog-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0.5rem 0 0.75rem 0;
+        }
+        .changelog-entry ul {
+            margin-top: 0.5rem;
+        }
+        .changelog-entry li {
+            margin-bottom: 0.4rem;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        .changelog-tag {
+            display: inline-block;
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.3rem;
+        }
+        .changelog-tag.new {
+            background: rgba(13, 148, 136, 0.2);
+            color: #14B8A6;
+        }
+        .changelog-tag.security {
+            background: rgba(245, 158, 11, 0.2);
+            color: #FBBF24;
+        }
+        .changelog-tag.improvement {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60A5FA;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-brand">
+                <span class="nav-logo">SF</span>
+                <span class="nav-name">StockFlow</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Changelog Content -->
+    <main class="policy-page">
+        <div class="policy-content">
+            <a href="index.html" class="policy-back"><i class="fas fa-arrow-left"></i> Torna alla Home</a>
+
+            <h1>Changelog</h1>
+            <p class="policy-updated">Cronologia delle versioni di StockFlow ERP</p>
+
+            <!-- v1.3.0 -->
+            <div class="changelog-entry">
+                <div class="changelog-header">
+                    <span class="changelog-version security">v1.3.0</span>
+                    <span class="changelog-date">26 febbraio 2026</span>
+                </div>
+                <div class="changelog-title">Security Hardening &amp; Documentazione</div>
+                <ul>
+                    <li><span class="changelog-tag security">Security</span> Nuova password policy: minimo 8 caratteri obbligatori per tutti gli account</li>
+                    <li><span class="changelog-tag security">Security</span> Implementazione rate limiting sugli endpoint di autenticazione per prevenire attacchi brute-force</li>
+                    <li><span class="changelog-tag security">Security</span> Validazione avanzata dei token JWT con controlli di integrit&agrave; e scadenza rafforzati</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Manuale d'uso online integrato, accessibile direttamente dalla piattaforma</li>
+                </ul>
+            </div>
+
+            <!-- v1.2.0 -->
+            <div class="changelog-entry">
+                <div class="changelog-header">
+                    <span class="changelog-version feature">v1.2.0</span>
+                    <span class="changelog-date">25 febbraio 2026</span>
+                </div>
+                <div class="changelog-title">Stripe, Branding &amp; SMTP per-tenant</div>
+                <ul>
+                    <li><span class="changelog-tag new">Nuovo</span> Integrazione Stripe per-tenant: ogni negozio pu&ograve; configurare il proprio account Stripe per i pagamenti</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Branding gift card personalizzato: possibilit&agrave; di personalizzare grafica e logo delle gift card per ogni tenant</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Configurazione SMTP per-tenant: ogni negozio pu&ograve; impostare il proprio server email per le comunicazioni ai clienti</li>
+                </ul>
+            </div>
+
+            <!-- v1.1.0 -->
+            <div class="changelog-entry">
+                <div class="changelog-header">
+                    <span class="changelog-version feature">v1.1.0</span>
+                    <span class="changelog-date">23 febbraio 2026</span>
+                </div>
+                <div class="changelog-title">Multi-tenant &amp; SuperAdmin</div>
+                <ul>
+                    <li><span class="changelog-tag new">Nuovo</span> Architettura multi-tenant: supporto completo per la gestione di pi&ugrave; negozi indipendenti sulla stessa piattaforma</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Pannello SuperAdmin per la gestione centralizzata di tutti i tenant, utenti e configurazioni</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Funzionalit&agrave; di impersonation: il SuperAdmin pu&ograve; accedere come qualsiasi utente per assistenza e debug</li>
+                </ul>
+            </div>
+
+            <!-- v1.0.0 -->
+            <div class="changelog-entry">
+                <div class="changelog-header">
+                    <span class="changelog-version initial">v1.0.0</span>
+                    <span class="changelog-date">Gennaio 2026</span>
+                </div>
+                <div class="changelog-title">Lancio iniziale</div>
+                <ul>
+                    <li><span class="changelog-tag new">Nuovo</span> Gestione completa del magazzino: prodotti, categorie, varianti, giacenze e movimenti</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Punto vendita (POS): interfaccia di cassa intuitiva con supporto a sconti, note e metodi di pagamento multipli</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Sistema gift card: creazione, vendita, ricarica e utilizzo di buoni regalo</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Trasferimenti merce tra sedi con tracking dello stato e storico movimenti</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Anagrafica clienti con storico acquisti e gestione punti fedelt&agrave;</li>
+                    <li><span class="changelog-tag new">Nuovo</span> Report e statistiche: vendite, margini, prodotti pi&ugrave; venduti, andamento temporale</li>
+                </ul>
+            </div>
+
+            <a href="index.html" class="policy-back"><i class="fas fa-arrow-left"></i> Torna alla Home</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 StockFlow ERP. Tutti i diritti riservati. | <a href="cookie-policy.html">Cookie Policy</a> | <a href="privacy-policy.html">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
