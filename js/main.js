@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (piano) text += `\nPiano di interesse: ${piano}`;
             text += `\n\n${messaggio}`;
 
-            const waUrl = `https://wa.me/393381710933?text=${encodeURIComponent(text)}`;
+            const waUrl = `https://wa.me/393294348075?text=${encodeURIComponent(text)}`;
             window.open(waUrl, '_blank');
         });
     }
