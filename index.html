@@ -681,9 +681,10 @@
                         <label for="messaggio">Messaggio *</label>
                         <textarea id="messaggio" name="messaggio" rows="4" required placeholder="Raccontaci le tue esigenze..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">
+                    <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
                         <i class="fas fa-paper-plane"></i> Invia Messaggio
                     </button>
+                    <div class="form-status" id="formStatus"></div>
                 </form>
             </div>
         </div>
@@ -729,6 +730,7 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 StockFlow ERP. Tutti i diritti riservati.</p>
+                <a href="https://www.enricomariacaruso.it" target="_blank" rel="noopener" title="Sviluppato da Enrico Maria Caruso" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px;opacity:0.4;font-size:11px;text-decoration:none;color:inherit;"><span>Sviluppato da</span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" height="18"><defs><linearGradient id="emcG" x1="0" y1="0" x2="120" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#7c5cfc"/><stop offset="45%" stop-color="#667eea"/><stop offset="100%" stop-color="#06d6a0"/></linearGradient><linearGradient id="emcIG" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#7c5cfc"/><stop offset="100%" stop-color="#06d6a0"/></linearGradient></defs><path d="M4,4 H24 L32,8 L24,12 H4 A4,4 0 0,1 4,4Z" fill="url(#emcIG)"/><path d="M4,15 H20 L28,19 L20,23 H4 A4,4 0 0,1 4,15Z" fill="url(#emcIG)" opacity="0.85"/><path d="M4,26 H24 L32,30 L24,34 H4 A4,4 0 0,1 4,26Z" fill="url(#emcIG)"/><text x="46" y="27" font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="700" fill="url(#emcG)" letter-spacing="3">EMC</text></svg></a>
             </div>
         </div>
     </footer>
