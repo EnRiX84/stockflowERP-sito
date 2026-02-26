@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockFlow ERP - Il Gestionale Cloud per il Retail</title>
+    <meta name="description" content="Gestisci magazzino, vendite, gift card e sito web da un'unica piattaforma cloud. Da 0 EUR/mese. Il gestionale pensato per i negozi italiani.">
+    <meta name="keywords" content="gestionale negozio, ERP retail, software magazzino, gestionale cloud, gift card digitali, punto cassa, gestionale italiano">
+    <meta name="author" content="StockFlow ERP">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="StockFlow ERP - Il Gestionale Cloud per il Retail">
+    <meta property="og:description" content="Magazzino, vendite, gift card e sito web integrati. Da 0 EUR/mese.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://enrix84.github.io/stockflowERP-sito/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cookie-consent.css">
+</head>
+<body>
+
+    <!-- ============ PRELOADER ============ -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">SF</div>
+            <div class="preloader-bar"><div class="preloader-progress"></div></div>
+        </div>
+    </div>
+
+    <!-- ============ NAVIGATION ============ -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="nav-brand">
+                <span class="nav-logo">SF</span>
+                <span class="nav-name">StockFlow</span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#funzionalita" class="nav-link">Funzionalit&agrave;</a></li>
+                <li><a href="#come-funziona" class="nav-link">Come Funziona</a></li>
+                <li><a href="#prezzi" class="nav-link">Prezzi</a></li>
+                <li><a href="#clienti" class="nav-link">Clienti</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#contatti" class="nav-link">Contatti</a></li>
+            </ul>
+            <a href="#prezzi" class="nav-cta">Prova Gratis</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="home">
+        <canvas id="heroParticles"></canvas>
+        <div class="container hero-container">
+            <div class="hero-text" data-aos="fade-right">
+                <span class="hero-tag">IL GESTIONALE CLOUD PER IL RETAIL</span>
+                <h1 class="hero-title">Gestisci il tuo negozio.<br><span class="gradient-text">Tutto in un unico posto.</span></h1>
+                <p class="hero-sub">Magazzino, vendite, gift card e sito web integrati. Da <strong>0 &euro;/mese</strong>.</p>
+                <div class="hero-cta">
+                    <a href="#prezzi" class="btn btn-primary">Prova Gratis <i class="fas fa-arrow-right"></i></a>
+                    <a href="#prezzi" class="btn btn-outline">Scopri i Piani</a>
+                </div>
+                <div class="hero-badges">
+                    <span><i class="fas fa-check-circle"></i> Nessuna carta richiesta</span>
+                    <span><i class="fas fa-check-circle"></i> Setup in 5 minuti</span>
+                    <span><i class="fas fa-check-circle"></i> GDPR compliant</span>
+                </div>
+            </div>
+            <div class="hero-visual" data-aos="fade-left" data-aos-delay="200">
+                <div class="dashboard-mockup">
+                    <div class="mockup-bar">
+                        <div class="mockup-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span class="mockup-url">app.stockflow.it/dashboard</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="mockup-sidebar">
+                            <div class="mockup-nav-item active"><i class="fas fa-chart-line"></i></div>
+                            <div class="mockup-nav-item"><i class="fas fa-boxes-stacked"></i></div>
+                            <div class="mockup-nav-item"><i class="fas fa-cash-register"></i></div>
+                            <div class="mockup-nav-item"><i class="fas fa-gift"></i></div>
+                            <div class="mockup-nav-item"><i class="fas fa-users"></i></div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="mockup-stat-row">
+                                <div class="mockup-stat">
+                                    <span class="mockup-stat-value">&euro; 12.450</span>
+                                    <span class="mockup-stat-label">Vendite Mese</span>
+                                    <span class="mockup-stat-badge up"><i class="fas fa-arrow-up"></i> +18%</span>
+                                </div>
+                                <div class="mockup-stat">
+                                    <span class="mockup-stat-value">342</span>
+                                    <span class="mockup-stat-label">Prodotti</span>
+                                    <span class="mockup-stat-badge up"><i class="fas fa-arrow-up"></i> +5</span>
+                                </div>
+                                <div class="mockup-stat">
+                                    <span class="mockup-stat-value">28</span>
+                                    <span class="mockup-stat-label">Gift Card</span>
+                                    <span class="mockup-stat-badge neutral"><i class="fas fa-minus"></i> 0</span>
+                                </div>
+                            </div>
+                            <div class="mockup-chart">
+                                <div class="mockup-bar-chart">
+                                    <div class="chart-bar" style="height:40%"></div>
+                                    <div class="chart-bar" style="height:65%"></div>
+                                    <div class="chart-bar" style="height:50%"></div>
+                                    <div class="chart-bar" style="height:80%"></div>
+                                    <div class="chart-bar" style="height:70%"></div>
+                                    <div class="chart-bar" style="height:90%"></div>
+                                    <div class="chart-bar active" style="height:95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FUNZIONALITA ============ -->
+    <section class="features" id="funzionalita">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Funzionalit&agrave;</span>
+                <h2 class="section-title">Tutto ci&ograve; che serve al tuo negozio</h2>
+                <p class="section-sub">Una piattaforma completa per gestire ogni aspetto della tua attivit&agrave; commerciale.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon" style="--icon-color: #2563EB">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <h3>Gestione Magazzino</h3>
+                    <p>Traccia prodotti, taglie, colori e giacenze in tempo reale. Import ed export CSV per aggiornamenti rapidi.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon" style="--icon-color: #0D9488">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <h3>Punto Cassa</h3>
+                    <p>Interfaccia rapida per le vendite con ricerca prodotti, sconti, e gestione resi. Tutto dal browser.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon" style="--icon-color: #F97316">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Gift Card Digitali</h3>
+                    <p>Vendi gift card dal sito web con pagamento Stripe. PDF personalizzato ed email automatica al destinatario.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon" style="--icon-color: #8B5CF6">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Sito Web Integrato</h3>
+                    <p>Sito vetrina professionale incluso, ottimizzato SEO, con gift card online e mappa del negozio.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon" style="--icon-color: #EC4899">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Multi-Negozio</h3>
+                    <p>Gestisci pi&ugrave; punti vendita da un'unica dashboard. Trasferimenti merce tra sedi in un click.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon" style="--icon-color: #0D9488">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Branding Personalizzato</h3>
+                    <p>Colori, logo e stile del tuo brand su gift card PDF, email e sito web. Il tuo marchio, ovunque.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon" style="--icon-color: #2563EB">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Report e Statistiche</h3>
+                    <p>Dashboard con vendite, margini e andamento. Esporta i dati per il commercialista in pochi click.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon" style="--icon-color: #22C55E">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <h3>GDPR e Sicurezza</h3>
+                    <p>Dati crittografati, backup automatici, cookie consent integrato. Conforme al GDPR senza pensieri.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ COME FUNZIONA ============ -->
+    <section class="how-it-works" id="come-funziona">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Come Funziona</span>
+                <h2 class="section-title">Operativo in 3 semplici passi</h2>
+                <p class="section-sub">Nessuna installazione, nessun hardware. Solo il tuo browser.</p>
+            </div>
+            <div class="steps">
+                <div class="step" data-aos="fade-up" data-aos-delay="0">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+                    <h3>Registrati</h3>
+                    <p>Crea il tuo account gratuito in meno di un minuto. Nessuna carta di credito richiesta.</p>
+                </div>
+                <div class="step-connector" data-aos="fade-up" data-aos-delay="100"></div>
+                <div class="step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-sliders"></i></div>
+                    <h3>Configura</h3>
+                    <p>Imposta il tuo negozio, carica i prodotti e personalizza il branding con i tuoi colori.</p>
+                </div>
+                <div class="step-connector" data-aos="fade-up" data-aos-delay="300"></div>
+                <div class="step" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-rocket"></i></div>
+                    <h3>Vendi</h3>
+                    <p>Inizia a gestire vendite, magazzino e gift card. Tutto pronto, tutto in cloud.</p>
+                </div>
+            </div>
+            <div class="counters" data-aos="fade-up">
+                <div class="counter">
+                    <span class="counter-value" data-count="2">0</span>
+                    <span class="counter-label">Negozi attivi</span>
+                </div>
+                <div class="counter">
+                    <span class="counter-value" data-count="99.9" data-suffix="%" data-decimals="1">0</span>
+                    <span class="counter-label">Uptime</span>
+                </div>
+                <div class="counter">
+                    <span class="counter-value" data-count="0" data-prefix="&euro;">0</span>
+                    <span class="counter-label">Per iniziare</span>
+                </div>
+                <div class="counter">
+                    <span class="counter-value" data-count="5" data-suffix="min">0</span>
+                    <span class="counter-label">Setup</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PREZZI ============ -->
+    <section class="pricing" id="prezzi">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Prezzi</span>
+                <h2 class="section-title">Scegli il piano giusto per te</h2>
+                <p class="section-sub">Inizia gratis, scala quando cresci. Nessun vincolo, disdici quando vuoi.</p>
+            </div>
+            <div class="pricing-grid">
+                <!-- FREE -->
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Free</h3>
+                        <div class="pricing-price">
+                            <span class="price-amount">&euro;0</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <p class="pricing-desc">Per iniziare e provare la piattaforma</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="included"><i class="fas fa-check"></i> 1 Negozio</li>
+                        <li class="included"><i class="fas fa-check"></i> 1 Utente</li>
+                        <li class="included"><i class="fas fa-check"></i> 50 Prodotti</li>
+                        <li class="excluded"><i class="fas fa-xmark"></i> Gift Card</li>
+                        <li class="excluded"><i class="fas fa-xmark"></i> Email personalizzate</li>
+                        <li class="excluded"><i class="fas fa-xmark"></i> Branding custom</li>
+                    </ul>
+                    <a href="#contatti" class="btn btn-outline-card">Inizia Gratis</a>
+                </div>
+
+                <!-- STARTER -->
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Starter</h3>
+                        <div class="pricing-price">
+                            <span class="price-amount">&euro;19</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <p class="pricing-desc">Per negozi singoli che vogliono crescere</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="included"><i class="fas fa-check"></i> 1 Negozio</li>
+                        <li class="included"><i class="fas fa-check"></i> 3 Utenti</li>
+                        <li class="included"><i class="fas fa-check"></i> 500 Prodotti</li>
+                        <li class="included"><i class="fas fa-check"></i> Gift Card</li>
+                        <li class="included"><i class="fas fa-check"></i> Email personalizzate</li>
+                        <li class="excluded"><i class="fas fa-xmark"></i> Branding custom</li>
+                    </ul>
+                    <a href="#contatti" class="btn btn-outline-card">Scegli Starter</a>
+                </div>
+
+                <!-- BUSINESS -->
+                <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="200">
+                    <span class="pricing-badge">Pi&ugrave; Popolare</span>
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Business</h3>
+                        <div class="pricing-price">
+                            <span class="price-amount">&euro;39</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <p class="pricing-desc">Per negozi affermati con pi&ugrave; sedi</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="included"><i class="fas fa-check"></i> 3 Negozi</li>
+                        <li class="included"><i class="fas fa-check"></i> 10 Utenti</li>
+                        <li class="included"><i class="fas fa-check"></i> Prodotti illimitati</li>
+                        <li class="included"><i class="fas fa-check"></i> Gift Card</li>
+                        <li class="included"><i class="fas fa-check"></i> Email personalizzate</li>
+                        <li class="included"><i class="fas fa-check"></i> Branding custom</li>
+                    </ul>
+                    <a href="#contatti" class="btn btn-primary">Scegli Business</a>
+                </div>
+
+                <!-- ENTERPRISE -->
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Enterprise</h3>
+                        <div class="pricing-price">
+                            <span class="price-amount">&euro;79</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <p class="pricing-desc">Per catene e grandi realt&agrave; retail</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="included"><i class="fas fa-check"></i> Negozi illimitati</li>
+                        <li class="included"><i class="fas fa-check"></i> Utenti illimitati</li>
+                        <li class="included"><i class="fas fa-check"></i> Prodotti illimitati</li>
+                        <li class="included"><i class="fas fa-check"></i> Gift Card</li>
+                        <li class="included"><i class="fas fa-check"></i> Email personalizzate</li>
+                        <li class="included"><i class="fas fa-check"></i> Branding custom</li>
+                    </ul>
+                    <a href="#contatti" class="btn btn-outline-card">Contattaci</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CASI DI SUCCESSO ============ -->
+    <section class="clients" id="clienti">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Clienti</span>
+                <h2 class="section-title">Chi usa StockFlow</h2>
+                <p class="section-sub">Negozi reali che hanno scelto StockFlow per gestire la propria attivit&agrave;.</p>
+            </div>
+            <div class="clients-grid">
+                <div class="client-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="client-header" style="--brand-primary: #FF1493; --brand-secondary: #1E90FF">
+                        <div class="client-brand">
+                            <span class="client-logo" style="background: linear-gradient(135deg, #FF1493, #1E90FF)">KB</span>
+                            <div>
+                                <h3>Klein Baby</h3>
+                                <p>Abbigliamento 0-16 anni</p>
+                            </div>
+                        </div>
+                        <span class="client-plan">BUSINESS</span>
+                    </div>
+                    <div class="client-body">
+                        <p class="client-quote">"Con StockFlow gestiamo magazzino e gift card da un'unica piattaforma. Il sito web integrato ci ha permesso di raggiungere nuovi clienti online."</p>
+                        <div class="client-info">
+                            <span><i class="fas fa-map-marker-alt"></i> Campobello di Licata (AG)</span>
+                            <span><i class="fas fa-store"></i> 1 sede</span>
+                        </div>
+                        <div class="client-features">
+                            <span class="client-feature"><i class="fas fa-check"></i> Magazzino</span>
+                            <span class="client-feature"><i class="fas fa-check"></i> Gift Card</span>
+                            <span class="client-feature"><i class="fas fa-check"></i> Sito Web</span>
+                            <span class="client-feature"><i class="fas fa-check"></i> Branding</span>
+                        </div>
+                    </div>
+                    <a href="https://www.kleinbaby.it" target="_blank" rel="noopener" class="client-link">
+                        Visita il sito <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="client-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="client-header" style="--brand-primary: #D4A84B; --brand-secondary: #B8860B">
+                        <div class="client-brand">
+                            <span class="client-logo" style="background: linear-gradient(135deg, #D4A84B, #B8860B)">GF</span>
+                            <div>
+                                <h3>Grandi Firme di Fuc&agrave;</h3>
+                                <p>Outlet abbigliamento firmato</p>
+                            </div>
+                        </div>
+                        <span class="client-plan">BUSINESS</span>
+                    </div>
+                    <div class="client-body">
+                        <p class="client-quote">"Gestire due sedi con un unico sistema ha semplificato tutto. Le gift card personalizzate con il nostro branding oro sono un successo."</p>
+                        <div class="client-info">
+                            <span><i class="fas fa-map-marker-alt"></i> Sicilia</span>
+                            <span><i class="fas fa-store"></i> 2 sedi</span>
+                        </div>
+                        <div class="client-features">
+                            <span class="client-feature"><i class="fas fa-check"></i> Multi-negozio</span>
+                            <span class="client-feature"><i class="fas fa-check"></i> Gift Card</span>
+                            <span class="client-feature"><i class="fas fa-check"></i> Sito Web</span>
+                            <span class="client-feature"><i class="fas fa-check"></i> Branding</span>
+                        </div>
+                    </div>
+                    <a href="https://www.grandifirmedifuca.it" target="_blank" rel="noopener" class="client-link">
+                        Visita il sito <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CONFRONTO COMPETITOR ============ -->
+    <section class="comparison" id="confronto">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Confronto</span>
+                <h2 class="section-title">Perch&eacute; scegliere StockFlow</h2>
+                <p class="section-sub">L'unica soluzione italiana che unisce gestionale, sito web e gift card.</p>
+            </div>
+            <div class="comparison-table-wrapper" data-aos="fade-up">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Funzionalit&agrave;</th>
+                            <th class="highlight">StockFlow</th>
+                            <th>Danea EasyFatt</th>
+                            <th>Bman</th>
+                            <th>Cassa in Cloud</th>
+                            <th>Shopify</th>
+                            <th>iKYBER</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Prezzo da</td>
+                            <td class="highlight"><strong>&euro;0/mese</strong></td>
+                            <td>&euro;15/mese</td>
+                            <td>&euro;19/mese</td>
+                            <td>&euro;30/mese</td>
+                            <td>&euro;28/mese</td>
+                            <td>&euro;179/mese</td>
+                        </tr>
+                        <tr>
+                            <td>Cloud</td>
+                            <td class="highlight"><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Sito Web Integrato</td>
+                            <td class="highlight"><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Gift Card Digitali</td>
+                            <td class="highlight"><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Multi-Negozio</td>
+                            <td class="highlight"><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Branding Personalizzato</td>
+                            <td class="highlight"><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Compliance Fiscale IT</td>
+                            <td class="highlight"><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                            <td><i class="fas fa-xmark-circle text-danger"></i></td>
+                            <td><i class="fas fa-check-circle text-success"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">FAQ</span>
+                <h2 class="section-title">Domande frequenti</h2>
+                <p class="section-sub">Tutto quello che devi sapere prima di iniziare.</p>
+            </div>
+            <div class="faq-list" data-aos="fade-up">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Come funziona la prova gratuita?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Il piano Free &egrave; gratuito per sempre, non &egrave; una prova a tempo. Puoi usarlo senza limiti di tempo con 1 negozio, 1 utente e fino a 50 prodotti. Quando sei pronto a crescere, puoi passare a un piano superiore in qualsiasi momento.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Devo installare qualcosa?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No, StockFlow funziona interamente nel browser. Non serve installare software, plugin o hardware dedicato. Basta un computer, tablet o smartphone con connessione internet.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Come funziona il sito web integrato?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Creiamo per te un sito vetrina professionale con il tuo dominio personalizzato. Il sito include pagina gift card con pagamento online, mappa del negozio, orari e contatti. &Egrave; ottimizzato per SEO e mobile.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Come funzionano le gift card?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>I tuoi clienti possono acquistare gift card direttamente dal sito web del tuo negozio. Il pagamento avviene tramite Stripe (carte di credito/debito). Il destinatario riceve un PDF personalizzato con il tuo branding via email.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>I miei dati sono al sicuro?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Assolutamente s&igrave;. I dati sono crittografati, il sistema &egrave; conforme al GDPR e facciamo backup automatici. Il server &egrave; ospitato in Europa con certificati SSL per tutte le comunicazioni.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Posso importare i prodotti da un altro gestionale?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>S&igrave;, puoi importare i tuoi prodotti tramite file CSV. Il formato &egrave; semplice e compatibile con Excel. Ti forniamo un template di esempio per facilitare l'importazione.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Posso cambiare piano in qualsiasi momento?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>S&igrave;, puoi passare a un piano superiore o inferiore quando vuoi. L'upgrade &egrave; immediato, il downgrade avviene alla fine del periodo di fatturazione corrente. Nessun vincolo contrattuale.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Funziona su tablet e smartphone?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>S&igrave;, l'interfaccia &egrave; completamente responsive. Puoi gestire il magazzino e le vendite anche da tablet, ideale per l'uso in negozio. Il sito web del tuo negozio &egrave; ottimizzato per mobile.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Che tipo di assistenza offrite?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Offriamo supporto via email e WhatsApp. I piani Business e Enterprise includono supporto prioritario. Il piano Enterprise include anche assistenza telefonica dedicata e onboarding personalizzato.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA FINALE ============ -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="final-cta-content" data-aos="zoom-in">
+                <h2>Pronto a semplificare la gestione del tuo negozio?</h2>
+                <p>Unisciti ai negozi che hanno gi&agrave; scelto StockFlow. Inizia gratis, senza carta di credito.</p>
+                <a href="#contatti" class="btn btn-primary btn-lg">Crea il tuo Account Gratis <i class="fas fa-arrow-right"></i></a>
+                <div class="final-cta-badges">
+                    <span><i class="fas fa-lock"></i> Dati al sicuro</span>
+                    <span><i class="fas fa-credit-card"></i> Nessuna carta richiesta</span>
+                    <span><i class="fas fa-calendar-xmark"></i> Nessun vincolo</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CONTATTI ============ -->
+    <section class="contact" id="contatti">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Contatti</span>
+                <h2 class="section-title">Parliamo del tuo progetto</h2>
+                <p class="section-sub">Hai domande? Vuoi una demo? Scrivici e ti rispondiamo entro 24 ore.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email</h4>
+                            <a href="mailto:info@stockflow.it">info@stockflow.it</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <a href="https://wa.me/393381710933">+39 338 171 0933</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Sede</h4>
+                            <p>Sicilia, Italia</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm" data-aos="fade-left">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome">Nome *</label>
+                            <input type="text" id="nome" name="nome" required placeholder="Il tuo nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="La tua email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="negozio">Nome Negozio</label>
+                        <input type="text" id="negozio" name="negozio" placeholder="Il nome del tuo negozio">
+                    </div>
+                    <div class="form-group">
+                        <label for="piano">Piano di interesse</label>
+                        <select id="piano" name="piano">
+                            <option value="">Seleziona un piano</option>
+                            <option value="free">Free</option>
+                            <option value="starter">Starter - &euro;19/mese</option>
+                            <option value="business">Business - &euro;39/mese</option>
+                            <option value="enterprise">Enterprise - &euro;79/mese</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="messaggio">Messaggio *</label>
+                        <textarea id="messaggio" name="messaggio" rows="4" required placeholder="Raccontaci le tue esigenze..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-paper-plane"></i> Invia Messaggio
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="nav-logo">SF</span>
+                        <span class="nav-name">StockFlow</span>
+                    </div>
+                    <p>Il gestionale cloud per il retail italiano. Magazzino, vendite, gift card e sito web in un'unica piattaforma.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Prodotto</h4>
+                    <ul>
+                        <li><a href="#funzionalita">Funzionalit&agrave;</a></li>
+                        <li><a href="#prezzi">Prezzi</a></li>
+                        <li><a href="#confronto">Confronto</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Azienda</h4>
+                    <ul>
+                        <li><a href="#clienti">Clienti</a></li>
+                        <li><a href="#contatti">Contatti</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legale</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="cookie-policy.html">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 StockFlow ERP. Tutti i diritti riservati.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-inner">
+            <div class="cookie-banner-text">
+                Utilizziamo cookie tecnici per il corretto funzionamento del sito. Per maggiori informazioni consulta la nostra <a href="cookie-policy.html">Cookie Policy</a>.
+            </div>
+            <div class="cookie-banner-actions">
+                <button class="cookie-btn cookie-btn-accept" id="cookieAcceptAll">Accetta tutti</button>
+                <button class="cookie-btn cookie-btn-reject" id="cookieRejectAll">Solo necessari</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Gear -->
+    <div class="cookie-gear" id="cookieGear" title="Impostazioni cookie">
+        <i class="fas fa-cookie-bite"></i>
+    </div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Torna su">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/cookie-consent.js"></script>
+</body>
+</html>
