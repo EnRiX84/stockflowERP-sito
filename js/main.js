@@ -188,11 +188,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ---- Contact Form -> WhatsApp ----
+    // ---- Contact Form -> FormSubmit.co ----
     const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
+
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Invio in corso...';
+            formStatus.textContent = '';
+            formStatus.className = 'form-status';
 
             const nome = document.getElementById('nome').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -200,14 +208,39 @@ document.addEventListener('DOMContentLoaded', () => {
             const piano = document.getElementById('piano').value;
             const messaggio = document.getElementById('messaggio').value.trim();
 
-            let text = `Ciao! Sono ${nome}`;
-            if (negozio) text += ` del negozio "${negozio}"`;
-            text += `.\n\nEmail: ${email}`;
-            if (piano) text += `\nPiano di interesse: ${piano}`;
-            text += `\n\n${messaggio}`;
+            const data = {
+                name: nome,
+                email: email,
+                _subject: `StockFlow - Contatto da ${nome}${negozio ? ` (${negozio})` : ''}`,
+                message: messaggio,
+                negozio: negozio || 'Non specificato',
+                piano: piano || 'Non specificato',
+            };
 
-            const waUrl = `https://wa.me/393294348075?text=${encodeURIComponent(text)}`;
-            window.open(waUrl, '_blank');
+            try {
+                const response = await fetch('https://formsubmit.co/ajax/carusoenricom@gmail.com', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    formStatus.textContent = 'Messaggio inviato con successo! Ti risponderemo al più presto.';
+                    formStatus.className = 'form-status success';
+                    contactForm.reset();
+                } else {
+                    throw new Error('Errore invio');
+                }
+            } catch {
+                formStatus.textContent = 'Si è verificato un errore. Riprova o scrivici direttamente a carusoenricom@gmail.com';
+                formStatus.className = 'form-status error';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Invia Messaggio';
+            }
         });
     }
 
