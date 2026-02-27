@@ -222,6 +222,14 @@
                 <li><a href="#report">Report</a></li>
                 <li><a href="#sms">SMS Marketing</a></li>
                 <li><a href="#utenti">Gestione Utenti</a></li>
+                <li><a href="#import-utenti">Import Utenti CSV</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <ul class="sub">
+                    <li><a href="#perf-dipendenti">Performance Dipendenti</a></li>
+                    <li><a href="#perf-negozi">Performance Negozi</a></li>
+                </ul>
+                <li><a href="#webhooks">Webhook</a></li>
+                <li><a href="#assistenza">Assistenza</a></li>
                 <li><a href="#impostazioni">Impostazioni Tenant</a></li>
                 <li><a href="#superadmin" style="color: var(--accent-light); font-weight: 600;">SuperAdmin</a></li>
                 <ul class="sub">
@@ -468,6 +476,118 @@
                 <p>Ogni utente pu&ograve; essere <strong>disattivato</strong> senza eliminarlo, mantenendo lo storico delle sue operazioni.</p>
             </section>
 
+            <!-- =============== IMPORT UTENTI =============== -->
+            <section id="import-utenti">
+                <h2><span class="icon" style="background: rgba(13,148,136,0.15); color: var(--teal-light);"><i class="fas fa-user-plus"></i></span> Import Utenti CSV</h2>
+                <p>L'amministratore pu&ograve; importare utenti in blocco da un file CSV, utile per caricare rapidamente l'intero team.</p>
+
+                <h3>Formato CSV</h3>
+                <p>Il file CSV deve utilizzare il separatore <strong>punto e virgola</strong> (;) con le seguenti colonne:</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Colonna</th><th>Obbligatoria</th><th>Descrizione</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>email</code></td><td>S&igrave;</td><td>Email univoca dell'utente</td></tr>
+                            <tr><td><code>nome</code></td><td>S&igrave;</td><td>Nome</td></tr>
+                            <tr><td><code>cognome</code></td><td>S&igrave;</td><td>Cognome</td></tr>
+                            <tr><td><code>ruolo</code></td><td>S&igrave;</td><td>ADMIN, MANAGER o EMPLOYEE</td></tr>
+                            <tr><td><code>negozi</code></td><td>No</td><td>Codici negozio separati da virgola (es. RAC,GRO)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Procedura</h3>
+                <ol>
+                    <li>Scarica il <strong>template CSV</strong> dalla pagina Import Utenti.</li>
+                    <li>Compilalo con i dati del team e caricalo.</li>
+                    <li>Il sistema mostra un'<strong>anteprima</strong> con eventuali errori per riga.</li>
+                    <li>Conferma l'import. Le <strong>password vengono generate automaticamente</strong> e mostrate una sola volta.</li>
+                </ol>
+
+                <div class="warning">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <span>L'import rispetta i <strong>limiti del piano</strong>. Se il numero di utenti importati supera il limite, le righe in eccesso vengono scartate.</span>
+                </div>
+            </section>
+
+            <!-- =============== ANALYTICS =============== -->
+            <section id="analytics">
+                <h2><span class="icon" style="background: rgba(37,99,235,0.15); color: var(--primary-light);"><i class="fas fa-chart-line"></i></span> Analytics</h2>
+                <p>Le dashboard di analytics offrono metriche avanzate sulle performance di dipendenti e negozi. Disponibili solo per il ruolo <span class="tag tag-red">ADMIN</span>.</p>
+
+                <h3 id="perf-dipendenti">Performance Dipendenti</h3>
+                <p>Classifica dei dipendenti per ricavo netto, con le seguenti metriche:</p>
+                <ul>
+                    <li><strong>Numero vendite</strong> e <strong>importo totale</strong></li>
+                    <li><strong>Scontrino medio</strong> (valore medio per transazione)</li>
+                    <li><strong>Articoli venduti</strong> (quantit&agrave; totale)</li>
+                    <li><strong>Resi</strong> (numero e importo)</li>
+                    <li><strong>Ricavo netto</strong> (vendite meno resi)</li>
+                    <li><strong>Breakdown pagamenti</strong>: contanti, carta, gift card</li>
+                </ul>
+                <p>Espandi ogni dipendente per vedere le vendite e i resi recenti. Filtra per <strong>negozio</strong> e <strong>periodo temporale</strong>.</p>
+
+                <h3 id="perf-negozi">Performance Negozi</h3>
+                <p>Confronto tra i punti vendita con le stesse metriche pi&ugrave;:</p>
+                <ul>
+                    <li><strong>Variazione percentuale</strong> rispetto al periodo precedente (es. mese scorso)</li>
+                    <li><strong>Top dipendenti</strong> per ogni negozio</li>
+                </ul>
+                <p>Utile per identificare trend, confrontare le sedi e premiare i migliori risultati.</p>
+            </section>
+
+            <!-- =============== WEBHOOKS =============== -->
+            <section id="webhooks">
+                <h2><span class="icon" style="background: rgba(139,92,246,0.15); color: #A78BFA;"><i class="fas fa-plug"></i></span> Webhook</h2>
+                <p>I webhook permettono di notificare sistemi esterni in tempo reale quando avvengono eventi nel gestionale.</p>
+
+                <h3>Eventi supportati</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Evento</th><th>Descrizione</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>sale.created</code></td><td>Nuova vendita registrata</td></tr>
+                            <tr><td><code>return.created</code></td><td>Nuovo reso registrato</td></tr>
+                            <tr><td><code>transfer.completed</code></td><td>Trasferimento ricevuto a destinazione</td></tr>
+                            <tr><td><code>customer.created</code></td><td>Nuovo cliente creato</td></tr>
+                            <tr><td><code>stock.low</code></td><td>Prodotto sotto scorta minima</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Configurazione</h3>
+                <ol>
+                    <li>Vai alla sezione <strong>Webhook</strong> dal menu laterale.</li>
+                    <li>Clicca <strong>Nuovo Webhook</strong> e inserisci l'URL di destinazione.</li>
+                    <li>Seleziona gli <strong>eventi</strong> che vuoi ricevere.</li>
+                    <li>Il sistema genera automaticamente un <strong>secret HMAC</strong> per la firma delle richieste.</li>
+                    <li>Usa il pulsante <strong>Test</strong> per verificare la connessione.</li>
+                </ol>
+
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Ogni richiesta webhook include un header <code>X-Webhook-Signature</code> con firma HMAC-SHA256 per verificare l'autenticit&agrave; del payload.</span>
+                </div>
+            </section>
+
+            <!-- =============== ASSISTENZA =============== -->
+            <section id="assistenza">
+                <h2><span class="icon" style="background: rgba(34,197,94,0.15); color: #4ADE80;"><i class="fas fa-headset"></i></span> Assistenza</h2>
+                <p>Il sistema di assistenza in-app permette di aprire ticket direttamente dal gestionale.</p>
+
+                <h3>Aprire un ticket</h3>
+                <ol>
+                    <li>Vai alla sezione <strong>Assistenza</strong> dal menu laterale (disponibile per tutti i ruoli).</li>
+                    <li>Clicca <strong>Nuovo Ticket</strong>.</li>
+                    <li>Seleziona la <strong>categoria</strong>: Malfunzionamento, Nuova funzionalit&agrave;, Domanda o Urgente.</li>
+                    <li>Inserisci titolo e descrizione del problema.</li>
+                    <li>Invia. Il ticket viene creato e tracciato.</li>
+                </ol>
+
+                <h3>Seguire lo stato</h3>
+                <p>Dalla lista ticket puoi vedere lo stato (aperto/chiuso) e i commenti di risposta del team di supporto. Espandi un ticket per leggere i dettagli completi.</p>
+            </section>
+
             <!-- =============== IMPOSTAZIONI =============== -->
             <section id="impostazioni">
                 <h2><span class="icon" style="background: rgba(139,92,246,0.15); color: #A78BFA;"><i class="fas fa-cog"></i></span> Impostazioni Tenant</h2>
@@ -481,6 +601,14 @@
 
                 <h3>Brand e Categorie</h3>
                 <p>Gestisci i brand (marchi) e le categorie dei prodotti dalla sezione dedicata. Questi vengono usati come filtri nella ricerca prodotti e nei report.</p>
+
+                <h3>Politica Sconti</h3>
+                <p>Configura le regole per l'applicazione degli sconti:</p>
+                <ul>
+                    <li><strong>Sconto massimo consentito</strong>: percentuale massima applicabile a qualsiasi articolo (default: 50%).</li>
+                    <li><strong>Doppio sconto</strong>: se disabilitato, non &egrave; possibile applicare uno sconto aggiuntivo su articoli gi&agrave; in saldo.</li>
+                </ul>
+                <p>Queste impostazioni vengono applicate automaticamente al momento della vendita, con avvisi visivi al POS.</p>
             </section>
 
             <!-- =============== SUPERADMIN =============== -->
