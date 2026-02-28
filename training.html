@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training - Primo Utilizzo - StockFlow ERP</title>
+    <meta name="description" content="Guida passo-passo al primo utilizzo di StockFlow ERP: setup, prodotti, vendite, resi, sconti, inventario e clienti.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-light: #60A5FA;
+            --primary-dark: #1D4ED8;
+            --teal: #0D9488;
+            --teal-light: #2DD4BF;
+            --accent: #F97316;
+            --accent-light: #FB923C;
+            --success: #22C55E;
+            --danger: #EF4444;
+            --purple: #8B5CF6;
+            --dark: #0F172A;
+            --dark-lighter: #1E293B;
+            --dark-card: #1a2332;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --radius: 12px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+        body {
+            font-family: var(--font);
+            font-size: 16px;
+            line-height: 1.7;
+            color: #CBD5E1;
+            background: var(--dark);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: var(--primary-light); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--teal-light); }
+
+        /* ---- Navbar ---- */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0 24px; height: 64px;
+            display: flex; align-items: center;
+        }
+        .nav-inner { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+        .nav-brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 700; font-size: 18px; }
+        .nav-logo { background: linear-gradient(135deg, var(--primary), var(--teal)); color: #fff; font-weight: 800; font-size: 14px; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-back { color: var(--gray-400); font-size: 14px; transition: color 0.2s; }
+        .nav-back:hover { color: #fff; }
+        .nav-back i { margin-right: 6px; }
+
+        /* ---- Layout ---- */
+        .page { display: flex; max-width: 1200px; margin: 80px auto 0; padding: 0 24px; gap: 48px; }
+
+        /* ---- Sidebar / TOC ---- */
+        .sidebar {
+            width: 260px; flex-shrink: 0; position: sticky; top: 80px;
+            max-height: calc(100vh - 96px); overflow-y: auto;
+            padding: 24px 0;
+        }
+        .sidebar::-webkit-scrollbar { width: 3px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--dark-lighter); border-radius: 3px; }
+        .sidebar h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-500); margin-bottom: 12px; padding-left: 12px; }
+        .sidebar ul { list-style: none; }
+        .sidebar li { margin-bottom: 2px; }
+        .sidebar a {
+            display: block; padding: 7px 12px; border-radius: 8px;
+            font-size: 13.5px; color: var(--gray-400); transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+        .sidebar a:hover { color: #fff; background: rgba(255,255,255,0.04); }
+        .sidebar a.active { color: var(--primary-light); background: rgba(37, 99, 235, 0.08); border-left-color: var(--primary); }
+
+        /* ---- Content ---- */
+        .content { flex: 1; min-width: 0; padding: 24px 0 80px; }
+
+        .content h1 {
+            font-size: 32px; font-weight: 800; color: #fff;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff, var(--primary-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .content .subtitle { color: var(--gray-500); font-size: 16px; margin-bottom: 48px; }
+
+        .content h2 {
+            font-size: 22px; font-weight: 700; color: #fff;
+            margin-top: 56px; margin-bottom: 16px; padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .content h2 .icon {
+            width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-size: 14px; flex-shrink: 0;
+        }
+
+        .content h3 { font-size: 17px; font-weight: 600; color: #E2E8F0; margin-top: 32px; margin-bottom: 10px; }
+        .content h4 { font-size: 15px; font-weight: 600; color: #CBD5E1; margin-top: 24px; margin-bottom: 8px; }
+
+        .content p { margin-bottom: 14px; }
+        .content ul, .content ol { margin-bottom: 14px; padding-left: 20px; }
+        .content li { margin-bottom: 6px; }
+        .content ul { list-style: disc; }
+        .content ol { list-style: decimal; }
+        .content strong { color: #E2E8F0; }
+
+        /* Callouts */
+        .tip, .warning, .info {
+            padding: 14px 18px; border-radius: var(--radius); margin: 18px 0;
+            font-size: 14px; line-height: 1.6;
+            display: flex; gap: 12px; align-items: flex-start;
+        }
+        .tip { background: rgba(13, 148, 136, 0.1); border: 1px solid rgba(13, 148, 136, 0.2); }
+        .tip i { color: var(--teal-light); margin-top: 2px; }
+        .warning { background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.2); }
+        .warning i { color: var(--accent-light); margin-top: 2px; }
+        .info { background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.2); }
+        .info i { color: var(--primary-light); margin-top: 2px; }
+
+        /* Tables */
+        .table-wrap { overflow-x: auto; margin: 18px 0; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.06); }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        thead { background: var(--dark-lighter); }
+        th { padding: 10px 16px; text-align: left; font-weight: 600; color: #E2E8F0; white-space: nowrap; }
+        td { padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.04); }
+
+        /* Tags */
+        .tag {
+            display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+            padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px;
+        }
+        .tag-blue { background: rgba(37,99,235,0.15); color: var(--primary-light); }
+        .tag-teal { background: rgba(13,148,136,0.15); color: var(--teal-light); }
+        .tag-orange { background: rgba(249,115,22,0.15); color: var(--accent-light); }
+        .tag-green { background: rgba(34,197,94,0.15); color: #4ADE80; }
+        .tag-red { background: rgba(239,68,68,0.15); color: #F87171; }
+
+        kbd { background: var(--dark-lighter); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 1px 6px; font-size: 12px; font-family: var(--font); color: #E2E8F0; }
+        code { background: var(--dark-lighter); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--teal-light); }
+
+        /* Step cards */
+        .step-flow { display: flex; flex-direction: column; gap: 0; margin: 24px 0; }
+        .step {
+            display: flex; gap: 16px; padding: 16px 0;
+            border-left: 2px solid rgba(37,99,235,0.3); margin-left: 15px; padding-left: 24px;
+            position: relative;
+        }
+        .step:last-child { border-left-color: transparent; }
+        .step-num {
+            position: absolute; left: -16px; top: 14px;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: var(--primary); color: #fff; font-weight: 700; font-size: 13px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .step-content { flex: 1; }
+        .step-content p { margin-bottom: 8px; }
+
+        /* Flow diagram */
+        .flow-box {
+            background: var(--dark-card); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius); padding: 24px; margin: 24px 0;
+            font-family: monospace; font-size: 14px; line-height: 2;
+            color: var(--gray-400);
+        }
+        .flow-box strong { color: #E2E8F0; }
+        .flow-box .flow-arrow { color: var(--primary-light); margin: 0 4px; }
+
+        /* Mobile hamburger TOC */
+        .mobile-toc-btn {
+            display: none; position: fixed; bottom: 24px; right: 24px; z-index: 99;
+            width: 48px; height: 48px; border-radius: 50%;
+            background: var(--primary); color: #fff; border: none;
+            font-size: 18px; cursor: pointer; box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+        }
+
+        /* Footer */
+        .manual-footer {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            text-align: center; padding: 32px 24px; color: var(--gray-500); font-size: 13px;
+        }
+        .manual-footer a { color: var(--primary-light); }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 900px) {
+            .sidebar { display: none; position: fixed; top: 0; left: 0; bottom: 0; z-index: 200; width: 280px; background: var(--dark); padding: 80px 16px 24px; border-right: 1px solid rgba(255,255,255,0.06); }
+            .sidebar.open { display: block; }
+            .mobile-toc-btn { display: flex; align-items: center; justify-content: center; }
+            .page { gap: 0; }
+            .content h1 { font-size: 26px; }
+            .content h2 { font-size: 19px; }
+            .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; }
+            .overlay.open { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">
+                <span class="nav-logo">SF</span>
+                <span>StockFlow</span>
+            </a>
+            <a href="index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Torna al sito</a>
+        </div>
+    </nav>
+
+    <!-- Overlay mobile -->
+    <div class="overlay" id="overlay" onclick="toggleToc()"></div>
+
+    <div class="page">
+        <!-- Sidebar TOC -->
+        <aside class="sidebar" id="sidebar">
+            <h4>Training</h4>
+            <ul>
+                <li><a href="#setup">Setup Iniziale</a></li>
+                <li><a href="#configurazione">Configurazione</a></li>
+                <li><a href="#prodotti">Aggiungere Prodotti</a></li>
+                <li><a href="#vendita">Fare una Vendita</a></li>
+                <li><a href="#reso">Fare un Reso</a></li>
+                <li><a href="#inventario">Gestione Inventario</a></li>
+                <li><a href="#clienti">Clienti e Fidelity</a></li>
+                <li><a href="#sconti">Sconti e Promozioni</a></li>
+                <li><a href="#flusso">Flusso Giornaliero</a></li>
+                <li><a href="#faq">Domande Frequenti</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main content -->
+        <main class="content">
+            <h1>Guida al Primo Utilizzo</h1>
+            <p class="subtitle">Training passo-passo per iniziare a usare StockFlow ERP</p>
+
+            <!-- =============== SETUP =============== -->
+            <section id="setup">
+                <h2><span class="icon" style="background: rgba(34,197,94,0.15); color: #4ADE80;"><i class="fas fa-rocket"></i></span> Setup Iniziale</h2>
+
+                <h3>Registrazione</h3>
+                <ol>
+                    <li>Vai alla pagina di login di StockFlow</li>
+                    <li>Clicca <strong>&quot;Registrati&quot;</strong></li>
+                    <li>Inserisci: nome azienda, nome, cognome, email, password</li>
+                    <li>Dopo la registrazione verrai reindirizzato alla pagina di <strong>Setup iniziale</strong></li>
+                </ol>
+
+                <h3>Creazione del primo negozio</h3>
+                <p>La prima cosa da fare &egrave; creare il tuo negozio:</p>
+
+                <div class="step-flow">
+                    <div class="step">
+                        <span class="step-num">1</span>
+                        <div class="step-content">
+                            <p><strong>Codice negozio</strong> &ndash; Un codice breve (es. <code>GF1</code> per Grotte, <code>GF2</code> per Racalmuto). Massimo 10 caratteri, solo lettere e numeri.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">2</span>
+                        <div class="step-content">
+                            <p><strong>Nome negozio</strong> &ndash; Il nome completo (es. &quot;Grandi Firme - Grotte&quot;)</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">3</span>
+                        <div class="step-content">
+                            <p><strong>Citt&agrave;, Indirizzo, Telefono</strong> &ndash; Opzionali, ma utili per lo scontrino</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">4</span>
+                        <div class="step-content">
+                            <p><strong>Dati iniziali</strong> (opzionale) &ndash; Puoi aggiungere subito i <strong>Brand</strong> che vendi (es. Nike, Adidas, Levi's) e le <strong>Categorie</strong> di prodotto (es. T-shirt, Pantaloni, Scarpe). Si possono aggiungere anche dopo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p>Clicca <strong>&quot;Crea Negozio&quot;</strong> e verrai portato alla Dashboard.</p>
+
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Il piano <strong>Free</strong> include 1 negozio e 1 utente. Puoi fare upgrade in qualsiasi momento dalle Impostazioni.</span>
+                </div>
+            </section>
+
+            <!-- =============== CONFIGURAZIONE =============== -->
+            <section id="configurazione">
+                <h2><span class="icon" style="background: rgba(139,92,246,0.15); color: #A78BFA;"><i class="fas fa-gear"></i></span> Configurazione</h2>
+
+                <p>Dal menu laterale vai su <strong>Impostazioni</strong>. Qui puoi configurare:</p>
+
+                <ul>
+                    <li><strong>Nome azienda</strong> e <strong>Logo</strong> (URL dell'immagine)</li>
+                    <li><strong>Dominio personalizzato</strong> (per il sito vetrina)</li>
+                    <li><strong>Politica sconti</strong>:
+                        <ul>
+                            <li>Sconto massimo applicabile in vendita (default: 50%)</li>
+                            <li>Permettere doppio sconto (sconto manuale su prodotti gi&agrave; in saldo)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Gestione negozi</strong>: aggiungere, modificare o disattivare punti vendita</li>
+                </ul>
+
+                <div class="info">
+                    <i class="fas fa-circle-info"></i>
+                    <span>La politica sconti si applica a tutte le vendite. Se imposti il massimo al 30%, nessun dipendente potr&agrave; fare sconti superiori al 30%.</span>
+                </div>
+            </section>
+
+            <!-- =============== PRODOTTI =============== -->
+            <section id="prodotti">
+                <h2><span class="icon" style="background: rgba(37,99,235,0.15); color: var(--primary-light);"><i class="fas fa-tags"></i></span> Aggiungere Prodotti</h2>
+
+                <h3>Singolo prodotto</h3>
+                <p>Dal menu laterale: <strong>Prodotti</strong> &rarr; <strong>Nuovo Prodotto</strong></p>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Campo</th><th>Descrizione</th><th>Obbligatorio</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>SKU</strong></td><td>Codice univoco del prodotto (es. <code>NK-AIRMAX-90</code>)</td><td><span class="tag tag-green">S&igrave;</span></td></tr>
+                            <tr><td><strong>Nome</strong></td><td>Nome del prodotto</td><td><span class="tag tag-green">S&igrave;</span></td></tr>
+                            <tr><td><strong>Brand</strong></td><td>Seleziona dalla lista dei brand creati</td><td><span class="tag tag-green">S&igrave;</span></td></tr>
+                            <tr><td><strong>Categoria</strong></td><td>Seleziona dalla lista delle categorie</td><td><span class="tag tag-green">S&igrave;</span></td></tr>
+                            <tr><td><strong>Prezzo di costo</strong></td><td>Quanto lo paghi tu (visibile solo admin)</td><td>No</td></tr>
+                            <tr><td><strong>Prezzo di vendita</strong></td><td>Prezzo al pubblico</td><td><span class="tag tag-green">S&igrave;</span></td></tr>
+                            <tr><td><strong>Genere</strong></td><td>Unisex / Maschile / Femminile</td><td>No</td></tr>
+                            <tr><td><strong>Stagione</strong></td><td>Tutte / Primavera-Estate / Autunno-Inverno</td><td>No</td></tr>
+                            <tr><td><strong>Descrizione</strong></td><td>Descrizione del prodotto</td><td>No</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Varianti (taglie e colori)</h3>
+                <p>Ogni prodotto pu&ograve; avere pi&ugrave; <strong>varianti</strong>, ovvero combinazioni di taglia e colore. Per ogni variante puoi assegnare un <strong>codice a barre</strong> (barcode) che verr&agrave; usato nella scansione in cassa.</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Taglia</th><th>Colore</th><th>Barcode</th></tr></thead>
+                        <tbody>
+                            <tr><td>S</td><td>Nero</td><td><code>8001234567890</code></td></tr>
+                            <tr><td>M</td><td>Nero</td><td><code>8001234567891</code></td></tr>
+                            <tr><td>L</td><td>Nero</td><td><code>8001234567892</code></td></tr>
+                            <tr><td>S</td><td>Bianco</td><td><code>8001234567893</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Import massivo da CSV</h3>
+                <p>Se hai molti prodotti, vai su <strong>Prodotti</strong> &rarr; <strong>Import</strong> e carica un file CSV. Nella pagina trovi le istruzioni sul formato richiesto.</p>
+
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Dopo aver creato i prodotti, ricorda di <strong>caricare lo stock</strong> tramite Movimenti &rarr; Movimento Rapido.</span>
+                </div>
+            </section>
+
+            <!-- =============== VENDITA =============== -->
+            <section id="vendita">
+                <h2><span class="icon" style="background: rgba(34,197,94,0.15); color: #4ADE80;"><i class="fas fa-cash-register"></i></span> Fare una Vendita</h2>
+
+                <p>Dal menu laterale: <strong>Vendite</strong> &rarr; <strong>Nuova Vendita</strong></p>
+
+                <h3>La schermata POS</h3>
+                <p>La schermata &egrave; divisa in due parti:</p>
+
+                <h4><i class="fas fa-arrow-left" style="color: var(--primary-light); margin-right: 6px;"></i> Parte Sinistra &ndash; Carrello</h4>
+
+                <p><strong>Aggiungere prodotti:</strong></p>
+                <ul>
+                    <li>In alto c'&egrave; il campo <strong>&quot;Scansiona barcode&quot;</strong></li>
+                    <li>Usa un <strong>lettore barcode</strong> (scansiona e il prodotto si aggiunge automaticamente)</li>
+                    <li>Oppure digita il barcode a mano e premi <kbd>Invio</kbd></li>
+                    <li>Se scansioni lo stesso barcode due volte, la <strong>quantit&agrave; si incrementa</strong> automaticamente</li>
+                </ul>
+
+                <p><strong>Per ogni prodotto nel carrello vedi:</strong></p>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Prodotto</th><th>Prezzo</th><th>Sconto %</th><th>Quantit&agrave;</th><th>Totale</th><th></th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>Nike Air Max (42)</td>
+                                <td>&euro;89,00</td>
+                                <td><code>[0]</code> <span class="tag tag-orange">editabile</span></td>
+                                <td><code>[1]</code> <span class="tag tag-orange">editabile</span></td>
+                                <td>&euro;89,00</td>
+                                <td><span class="tag tag-red">Elimina</span></td>
+                            </tr>
+                            <tr>
+                                <td>Adidas Stan Smith (40)</td>
+                                <td>&euro;69,00</td>
+                                <td><code>[20]</code> <span class="tag tag-orange">editabile</span></td>
+                                <td><code>[2]</code> <span class="tag tag-orange">editabile</span></td>
+                                <td>&euro;110,40</td>
+                                <td><span class="tag tag-red">Elimina</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="warning">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <span>
+                        <strong>Sconto %</strong> &ndash; Puoi inserire una percentuale di sconto per ogni singolo articolo. Il campo &egrave; accanto alla quantit&agrave;. Lo sconto massimo dipende dalla politica sconti nelle Impostazioni (default 50%).<br><br>
+                        <strong>Quantit&agrave;</strong> &ndash; Puoi modificare la quantit&agrave; direttamente nel carrello cliccando sul numero e digitando il valore desiderato.
+                    </span>
+                </div>
+
+                <h4><i class="fas fa-arrow-right" style="color: var(--teal-light); margin-right: 6px;"></i> Parte Destra &ndash; Pagamento</h4>
+
+                <ol>
+                    <li><strong>Cliente</strong> (opzionale) &ndash; Cerca per nome. Se selezionato, vedi codice fidelity e punti attivi. Puoi usare i punti come sconto.</li>
+                    <li><strong>Gift Card</strong> (opzionale) &ndash; Inserisci il codice. Il sistema verifica il saldo e puoi usarne tutto o parte.</li>
+                    <li><strong>Metodo di pagamento</strong> &ndash; Contanti, Carta, Misto, Gift Card</li>
+                    <li><strong>Note</strong> (opzionale) &ndash; Appunti sulla vendita</li>
+                    <li><strong>Riepilogo</strong>:
+                        <ul>
+                            <li>Subtotale (somma articoli con sconti)</li>
+                            <li>Gift Card (importo scalato, se usata)</li>
+                            <li><strong>Totale</strong> (in grassetto)</li>
+                        </ul>
+                    </li>
+                    <li>Clicca <strong>&quot;Registra Vendita&quot;</strong> per completare</li>
+                </ol>
+
+                <h3>Dopo la vendita</h3>
+                <ul>
+                    <li>Lo stock viene decrementato automaticamente</li>
+                    <li>Se c'era un cliente, i punti fidelity vengono calcolati e accreditati</li>
+                    <li>Se &egrave; stata usata una gift card, il saldo viene aggiornato</li>
+                    <li>La vendita appare nella lista con un codice tipo <code>VEN260228-5431</code></li>
+                    <li>Puoi visualizzare e stampare lo scontrino</li>
+                </ul>
+            </section>
+
+            <!-- =============== RESO =============== -->
+            <section id="reso">
+                <h2><span class="icon" style="background: rgba(239,68,68,0.15); color: #F87171;"><i class="fas fa-rotate-left"></i></span> Fare un Reso</h2>
+
+                <div class="info">
+                    <i class="fas fa-circle-info"></i>
+                    <span>Il reso si fa sempre <strong>a partire da una vendita esistente</strong>. Non si pu&ograve; creare un reso &quot;al volo&quot; senza la vendita originale.</span>
+                </div>
+
+                <h3>Come fare un reso</h3>
+                <div class="step-flow">
+                    <div class="step">
+                        <span class="step-num">1</span>
+                        <div class="step-content">
+                            <p>Vai in <strong>Vendite</strong> dal menu laterale</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">2</span>
+                        <div class="step-content">
+                            <p>Trova la vendita originale nella lista e aprila</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">3</span>
+                        <div class="step-content">
+                            <p>Clicca il pulsante <strong>&quot;Reso&quot;</strong></p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">4</span>
+                        <div class="step-content">
+                            <p>Il sistema carica tutti gli articoli della vendita. Per ogni articolo, modifica la <strong>quantit&agrave; da rendere</strong> (non pu&ograve; superare la quantit&agrave; venduta).</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">5</span>
+                        <div class="step-content">
+                            <p>Seleziona il <strong>motivo del reso</strong>:</p>
+                            <div class="table-wrap">
+                                <table>
+                                    <tbody>
+                                        <tr><td><span class="tag tag-red">Difettoso</span></td><td>Prodotto danneggiato o difettoso</td></tr>
+                                        <tr><td><span class="tag tag-orange">Taglia errata</span></td><td>Non va bene la taglia</td></tr>
+                                        <tr><td><span class="tag tag-blue">Non piace</span></td><td>Il cliente ha cambiato idea</td></tr>
+                                        <tr><td><span class="tag tag-teal">Altro</span></td><td>Altro motivo (specificare nelle note)</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">6</span>
+                        <div class="step-content">
+                            <p>Clicca <strong>&quot;Registra Reso&quot;</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Cosa succede automaticamente</h3>
+                <ul>
+                    <li>Lo stock viene <strong>ripristinato</strong> (gli articoli resi tornano in magazzino)</li>
+                    <li>Se il cliente aveva guadagnato punti fidelity, vengono <strong>stornati</strong> proporzionalmente</li>
+                    <li>Il reso viene registrato con codice tipo <code>RES260228-1234</code></li>
+                    <li>Il reso resta collegato alla vendita originale</li>
+                </ul>
+
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Puoi anche accedere ai resi dal menu <strong>Resi</strong> &rarr; <strong>Nuovo Reso</strong>, ma dovrai comunque indicare la vendita di riferimento.</span>
+                </div>
+            </section>
+
+            <!-- =============== INVENTARIO =============== -->
+            <section id="inventario">
+                <h2><span class="icon" style="background: rgba(249,115,22,0.15); color: var(--accent-light);"><i class="fas fa-boxes-stacked"></i></span> Gestione Inventario</h2>
+
+                <h3>Carico merce</h3>
+                <p>Quando arriva nuova merce in negozio:</p>
+                <ol>
+                    <li>Vai su <strong>Movimenti</strong> &rarr; <strong>Movimento Rapido</strong></li>
+                    <li>Scansiona il barcode o cerca il prodotto</li>
+                    <li>Inserisci la quantit&agrave;</li>
+                    <li>Seleziona il tipo: <strong>CARICO</strong></li>
+                    <li>Conferma</li>
+                </ol>
+
+                <h3>Visualizzare lo stock</h3>
+                <p>Dal menu <strong>Inventario</strong> puoi vedere lo stock di ogni prodotto nel negozio corrente. Puoi filtrare per nome/SKU o mostrare solo i prodotti &quot;sotto scorta&quot;.</p>
+
+                <h3>Trasferimenti tra negozi</h3>
+                <p>Se hai pi&ugrave; negozi, puoi trasferire merce dall'uno all'altro:</p>
+                <ol>
+                    <li><strong>Trasferimenti</strong> &rarr; <strong>Nuovo Trasferimento</strong></li>
+                    <li>Seleziona negozio di origine e destinazione</li>
+                    <li>Aggiungi gli articoli con le quantit&agrave;</li>
+                    <li>Il negozio destinatario conferma la ricezione</li>
+                </ol>
+            </section>
+
+            <!-- =============== CLIENTI =============== -->
+            <section id="clienti">
+                <h2><span class="icon" style="background: rgba(139,92,246,0.15); color: #A78BFA;"><i class="fas fa-users"></i></span> Clienti e Fidelity</h2>
+
+                <h3>Aggiungere un cliente</h3>
+                <p><strong>Clienti</strong> &rarr; <strong>Nuovo Cliente</strong></p>
+                <ul>
+                    <li>Nome, Cognome</li>
+                    <li>Telefono, Email</li>
+                    <li>Codice fidelity (generato automaticamente)</li>
+                </ul>
+
+                <h3>Programma Fidelity</h3>
+                <p>Dal menu <strong>Fidelity</strong> puoi configurare quanti punti vengono assegnati per ogni euro speso. I clienti accumulano punti con ogni acquisto e possono usarli come sconto.</p>
+
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Associa il cliente alla vendita per fargli accumulare punti. Nella schermata POS, usa il campo &quot;Cliente&quot; nella parte destra per cercarlo.</span>
+                </div>
+            </section>
+
+            <!-- =============== SCONTI =============== -->
+            <section id="sconti">
+                <h2><span class="icon" style="background: rgba(249,115,22,0.15); color: var(--accent-light);"><i class="fas fa-percent"></i></span> Sconti e Promozioni</h2>
+
+                <h3>Sconto durante la vendita (manuale)</h3>
+                <p>Nella schermata POS, per ogni articolo nel carrello c'&egrave; il campo <strong>&quot;Sconto %&quot;</strong>. Inserisci la percentuale desiderata (es. 20 per il 20%) e il totale si aggiorna in tempo reale.</p>
+
+                <div class="warning">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <span>Lo sconto non pu&ograve; superare il massimo configurato nelle Impostazioni. Se il prodotto &egrave; gi&agrave; in saldo e il &quot;doppio sconto&quot; &egrave; disabilitato, non potrai aggiungere ulteriore sconto manuale.</span>
+                </div>
+
+                <h3>Sconti massivi su catalogo</h3>
+                <p>Dal menu <strong>Saldi/Sconti</strong> puoi applicare sconti a gruppi di prodotti:</p>
+                <ol>
+                    <li>Seleziona prodotti per <strong>brand</strong>, <strong>categoria</strong> o singolarmente</li>
+                    <li>Inserisci la <strong>percentuale di sconto</strong> (es. 30%)</li>
+                    <li>Imposta date di <strong>inizio e fine</strong> saldo (opzionale)</li>
+                    <li>Clicca <strong>&quot;Applica&quot;</strong></li>
+                </ol>
+                <p>I prodotti in saldo mostreranno il prezzo originale barrato e il prezzo scontato in evidenza.</p>
+            </section>
+
+            <!-- =============== FLUSSO =============== -->
+            <section id="flusso">
+                <h2><span class="icon" style="background: rgba(13,148,136,0.15); color: var(--teal-light);"><i class="fas fa-route"></i></span> Flusso Giornaliero</h2>
+
+                <p>Schema rapido di una giornata tipo:</p>
+
+                <div class="flow-box">
+                    <strong>APERTURA</strong><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Login <span class="flow-arrow">&rarr;</span> Dashboard (situazione generale)<br><br>
+
+                    <strong>DURANTE IL GIORNO</strong><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> <strong>Nuova Vendita</strong> (POS)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Scansiona barcode<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Modifica quantit&agrave; / sconto se serve<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Seleziona cliente (se ha fidelity)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Scegli metodo pagamento<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Registra Vendita<br><br>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> <strong>Reso</strong> (se necessario)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Trova vendita originale<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Seleziona articoli da rendere<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Scegli motivo <span class="flow-arrow">&rarr;</span> Registra Reso<br><br>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> <strong>Carico Merce</strong> (quando arriva nuova merce)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Movimento Rapido<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Scansiona barcode <span class="flow-arrow">&rarr;</span> Inserisci quantit&agrave;<br><br>
+
+                    <strong>CHIUSURA</strong><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="flow-arrow">&rarr;</span> Report <span class="flow-arrow">&rarr;</span> Vendite del giorno
+                </div>
+            </section>
+
+            <!-- =============== FAQ =============== -->
+            <section id="faq">
+                <h2><span class="icon" style="background: rgba(37,99,235,0.15); color: var(--primary-light);"><i class="fas fa-circle-question"></i></span> Domande Frequenti</h2>
+
+                <h3>&quot;Non trovo dove cambiare lo sconto in vendita&quot;</h3>
+                <p>Lo sconto &egrave; <strong>per ogni singolo articolo</strong> nel carrello. Accanto alla colonna della quantit&agrave; c'&egrave; il campo &quot;Sconto %&quot; editabile. Se non riesci a modificarlo, controlla:</p>
+                <ul>
+                    <li>Che la politica sconti permetta sconti (Impostazioni &rarr; Politica Sconti)</li>
+                    <li>Che il prodotto non sia gi&agrave; in saldo con &quot;doppio sconto&quot; disabilitato</li>
+                </ul>
+
+                <h3>&quot;Non trovo dove fare il reso&quot;</h3>
+                <p>Il reso parte sempre da una <strong>vendita esistente</strong>:</p>
+                <ol>
+                    <li><strong>Vendite</strong> &rarr; trova la vendita &rarr; apri dettaglio &rarr; pulsante <strong>Reso</strong></li>
+                    <li>Oppure: <strong>Resi</strong> &rarr; <strong>Nuovo Reso</strong> &rarr; inserisci il codice vendita</li>
+                </ol>
+
+                <h3>&quot;Non riesco a cambiare la quantit&agrave;&quot;</h3>
+                <p>La quantit&agrave; si modifica direttamente nel carrello. Accanto a ogni prodotto c'&egrave; il campo numerico della quantit&agrave;. Puoi:</p>
+                <ul>
+                    <li>Modificarlo manualmente cliccando sul numero</li>
+                    <li>Scansionare lo stesso barcode pi&ugrave; volte (si incrementa da solo)</li>
+                </ul>
+
+                <h3>&quot;Come carico la merce iniziale?&quot;</h3>
+                <ol>
+                    <li>Crea i prodotti (<strong>Prodotti</strong> &rarr; <strong>Nuovo Prodotto</strong>)</li>
+                    <li>Vai su <strong>Movimenti</strong> &rarr; <strong>Movimento Rapido</strong></li>
+                    <li>Scansiona ogni barcode e inserisci la quantit&agrave; come <strong>CARICO</strong></li>
+                </ol>
+
+                <h3>&quot;Posso lavorare senza internet?&quot;</h3>
+                <p>S&igrave;! StockFlow supporta la modalit&agrave; offline. Le vendite vengono salvate localmente e sincronizzate quando torni online.</p>
+
+                <h3>&quot;Dove trovo il manuale completo?&quot;</h3>
+                <p>Consulta il <a href="manuale.html">Manuale d'Uso</a> per la documentazione completa di tutte le funzionalit&agrave;.</p>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="manual-footer">
+        <p>&copy; 2026 StockFlow ERP &mdash; <a href="index.html">Torna al sito</a> &middot; <a href="manuale.html">Manuale d'Uso</a></p>
+    </footer>
+
+    <!-- Mobile TOC button -->
+    <button class="mobile-toc-btn" id="mobileTocBtn" onclick="toggleToc()" aria-label="Indice">
+        <i class="fas fa-list"></i>
+    </button>
+
+    <script>
+        // Mobile TOC toggle
+        function toggleToc() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+        }
+
+        // Close TOC on link click (mobile)
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) toggleToc();
+            });
+        });
+
+        // Active section tracking
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.sidebar a');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
