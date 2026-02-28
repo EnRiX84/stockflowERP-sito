@@ -348,4 +348,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // === Dynamic News from JSON ===
+    const newsGrid = document.getElementById('news-grid');
+    if (newsGrid) {
+        fetch('data/notizie.json')
+            .then(r => r.json())
+            .then(notizie => {
+                if (!notizie || notizie.length === 0) {
+                    const newsSection = document.getElementById('news');
+                    if (newsSection) newsSection.style.display = 'none';
+                    return;
+                }
+                const categoryColors = {
+                    'aggiornamento': '#2563EB',
+                    'funzionalita': '#0D9488',
+                    'evento': '#F97316',
+                    'novita': '#8B5CF6'
+                };
+                newsGrid.innerHTML = notizie.map((n, i) => {
+                    const color = categoryColors[n.categoria] || '#2563EB';
+                    const data = n.data || '';
+                    return `
+                    <div class="news-card" data-aos="fade-up" data-aos-delay="${i * 100}" style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.07);transition:transform 0.3s,box-shadow 0.3s;border:1px solid #f0f0f0">
+                        <div style="height:6px;background:${color}"></div>
+                        <div style="padding:28px">
+                            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                                <span style="background:${color}10;color:${color};padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600;text-transform:uppercase">${n.categoria}</span>
+                                ${data ? `<span style="color:#94a3b8;font-size:0.8rem"><i class="fas fa-calendar-alt" style="margin-right:4px"></i>${data}</span>` : ''}
+                            </div>
+                            <h3 style="font-size:1.15rem;font-weight:700;color:#1e293b;margin-bottom:10px;line-height:1.4">${n.titolo}</h3>
+                            <p style="color:#64748b;font-size:0.92rem;line-height:1.6;margin-bottom:16px">${n.descrizione || ''}</p>
+                            ${n.links && n.links.length > 0 ? n.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener" style="color:${color};font-weight:600;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-right:16px">${l.testo} <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></a>`).join('') : ''}
+                        </div>
+                    </div>`;
+                }).join('');
+                // Re-observe AOS for dynamically added elements
+                newsGrid.querySelectorAll('[data-aos]').forEach(el => {
+                    if (typeof aosObserver !== 'undefined') aosObserver.observe(el);
+                });
+            })
+            .catch(() => {
+                const newsSection = document.getElementById('news');
+                if (newsSection) newsSection.style.display = 'none';
+            });
+    }
+
 });
