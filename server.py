@@ -252,7 +252,7 @@ class SitoHandler(http.server.SimpleHTTPRequestHandler):
             users = load_users()
             _, existing = find_user(users, username)
             if existing:
-                self.send_error_json(400, f"Username '{username}' gia' in uso")
+                self.send_error_json(400, f"Username '{username}' già in uso")
                 return
 
             pw_hash, salt = hash_password(password)
