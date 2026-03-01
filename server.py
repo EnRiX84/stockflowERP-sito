@@ -4,14 +4,18 @@ Serve i file statici e gestisce il salvataggio delle notizie e autenticazione.
 Avviare con: python server.py
 """
 
+import base64
+import ftplib
 import hashlib
 import http.server
+import io
 import json
 import os
 import secrets
 import webbrowser
 import socketserver
 import urllib.parse
+import urllib.request
 import re
 from datetime import datetime, timedelta
 from http.cookies import SimpleCookie
@@ -20,6 +24,7 @@ PORT = 3003
 SITE_DIR = os.path.dirname(os.path.abspath(__file__)) if '__file__' in dir() else os.getcwd()
 NOTIZIE_PATH = os.path.join(SITE_DIR, "data", "notizie.json")
 USERS_PATH = os.path.join(SITE_DIR, "data", "users.json")
+SYNC_CONFIG_PATH = os.path.join(SITE_DIR, "data", "sync_config.json")
 
 SESSION_EXPIRY_HOURS = 8
 RUOLI = ['editor', 'admin']
@@ -73,6 +78,159 @@ def init_users():
     }]
     save_users(users)
     return True
+
+
+def load_sync_config():
+    if not os.path.exists(SYNC_CONFIG_PATH):
+        return None
+    try:
+        with open(SYNC_CONFIG_PATH, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def save_sync_config(config):
+    os.makedirs(os.path.dirname(SYNC_CONFIG_PATH), exist_ok=True)
+    with open(SYNC_CONFIG_PATH, 'w', encoding='utf-8') as f:
+        json.dump(config, f, ensure_ascii=False, indent=2)
+
+
+def sync_file(relative_path, file_bytes=None):
+    config = load_sync_config()
+    if not config:
+        return 'skipped'
+
+    metodo = config.get('metodo', 'nessuno')
+    if metodo == 'nessuno':
+        return 'skipped'
+
+    if file_bytes is None:
+        filepath = os.path.join(SITE_DIR, relative_path)
+        try:
+            with open(filepath, 'rb') as f:
+                file_bytes = f.read()
+        except Exception as e:
+            return f'Errore lettura file: {e}'
+
+    if metodo == 'github':
+        return _sync_github(config.get('github', {}), relative_path, file_bytes)
+    elif metodo == 'ftp':
+        return _sync_ftp(config.get('ftp', {}), relative_path, file_bytes)
+    else:
+        return 'skipped'
+
+
+def _sync_github(gh, relative_path, file_bytes):
+    token = gh.get('token', '').strip()
+    owner = gh.get('owner', '').strip()
+    repo = gh.get('repo', '').strip()
+    branch = gh.get('branch', 'main').strip()
+
+    if not token or not owner or not repo:
+        return 'skipped'
+
+    api_path = relative_path.replace('\\', '/')
+    api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{api_path}'
+    headers = {
+        'Authorization': f'token {token}',
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'SitoAdmin/1.0'
+    }
+
+    try:
+        sha = None
+        req = urllib.request.Request(api_url, headers=headers, method='GET')
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read().decode('utf-8'))
+                sha = data.get('sha')
+        except urllib.error.HTTPError as e:
+            if e.code != 404:
+                return f'Errore GitHub GET: {e.code} {e.reason}'
+
+        content_b64 = base64.b64encode(file_bytes).decode('ascii')
+        put_data = {
+            'message': f'Aggiorna {api_path} da pannello admin',
+            'content': content_b64,
+            'branch': branch
+        }
+        if sha:
+            put_data['sha'] = sha
+
+        put_body = json.dumps(put_data).encode('utf-8')
+        req = urllib.request.Request(api_url, data=put_body, headers={
+            **headers,
+            'Content-Type': 'application/json'
+        }, method='PUT')
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            if resp.status in (200, 201):
+                print(f'[SYNC] Sincronizzato su GitHub: {api_path}')
+                return 'ok'
+            else:
+                return f'Errore GitHub PUT: {resp.status}'
+
+    except urllib.error.HTTPError as e:
+        return f'Errore GitHub: {e.code} {e.reason}'
+    except Exception as e:
+        return f'Errore sync GitHub: {e}'
+
+
+def _sync_ftp(ftp_cfg, relative_path, file_bytes):
+    host = ftp_cfg.get('host', '').strip()
+    porta = int(ftp_cfg.get('porta', 21))
+    username = ftp_cfg.get('username', '').strip()
+    password = ftp_cfg.get('password', '')
+    percorso_remoto = ftp_cfg.get('percorso_remoto', '/public_html').strip()
+    use_tls = ftp_cfg.get('tls', True)
+
+    if not host or not username:
+        return 'skipped'
+
+    ftp = None
+    try:
+        if use_tls:
+            ftp = ftplib.FTP_TLS(timeout=15)
+        else:
+            ftp = ftplib.FTP(timeout=15)
+
+        ftp.connect(host, porta)
+        ftp.login(username, password)
+
+        if use_tls:
+            ftp.prot_p()
+
+        if percorso_remoto:
+            ftp.cwd(percorso_remoto)
+
+        remote_path = relative_path.replace('\\', '/')
+        parts = remote_path.split('/')
+        filename = parts[-1]
+        dirs = parts[:-1]
+
+        for d in dirs:
+            try:
+                ftp.cwd(d)
+            except ftplib.error_perm:
+                ftp.mkd(d)
+                ftp.cwd(d)
+
+        ftp.storbinary(f'STOR {filename}', io.BytesIO(file_bytes))
+
+        print(f'[SYNC] Sincronizzato via FTP: {remote_path}')
+        return 'ok'
+
+    except Exception as e:
+        return f'Errore FTP: {e}'
+    finally:
+        if ftp:
+            try:
+                ftp.quit()
+            except Exception:
+                try:
+                    ftp.close()
+                except Exception:
+                    pass
 
 
 class SitoHandler(http.server.SimpleHTTPRequestHandler):
@@ -130,6 +288,10 @@ class SitoHandler(http.server.SimpleHTTPRequestHandler):
             if not self.require_auth('admin'):
                 return
             self.handle_lista_utenti()
+        elif path == "/api/sync-config":
+            if not self.require_auth('admin'):
+                return
+            self.handle_get_sync_config()
         else:
             super().do_GET()
 
@@ -158,6 +320,14 @@ class SitoHandler(http.server.SimpleHTTPRequestHandler):
             if not self.require_auth('editor'):
                 return
             self.handle_salva_notizie()
+        elif self.path == "/api/sync-config":
+            if not self.require_auth('admin'):
+                return
+            self.handle_post_sync_config()
+        elif self.path == "/api/sync-test":
+            if not self.require_auth('admin'):
+                return
+            self.handle_sync_test()
         else:
             self.send_error(404, "Endpoint non trovato")
 
@@ -414,8 +584,13 @@ class SitoHandler(http.server.SimpleHTTPRequestHandler):
             with open(NOTIZIE_PATH, "w", encoding="utf-8") as f:
                 json.dump(notizie, f, ensure_ascii=False, indent=2)
 
-            self.send_json({"ok": True, "messaggio": f"Salvate {len(notizie)} notizie"})
-            print(f"[OK] Salvate {len(notizie)} notizie in {NOTIZIE_PATH}")
+            sync_result = sync_file("data/notizie.json")
+
+            messaggio = f"Salvate {len(notizie)} notizie"
+            if sync_result == 'ok':
+                messaggio += " — Pubblicato online"
+            self.send_json({"ok": True, "messaggio": messaggio, "sync": sync_result})
+            print(f"[OK] Salvate {len(notizie)} notizie in {NOTIZIE_PATH} (sync: {sync_result})")
 
         except json.JSONDecodeError:
             self.send_error_json(400, "JSON non valido")
@@ -423,6 +598,160 @@ class SitoHandler(http.server.SimpleHTTPRequestHandler):
             self.send_error_json(400, str(e))
         except Exception as e:
             self.send_error_json(500, f"Errore interno: {e}")
+
+    # --- API: Sync Config ---
+    def handle_get_sync_config(self):
+        config = load_sync_config()
+        if not config:
+            config = {
+                "metodo": "nessuno",
+                "github": {"token": "", "owner": "", "repo": "", "branch": "main"},
+                "ftp": {"host": "", "porta": 21, "username": "", "password": "",
+                        "percorso_remoto": "/public_html", "tls": True}
+            }
+        safe = json.loads(json.dumps(config))
+        if safe.get('github', {}).get('token', ''):
+            safe['github']['token'] = '\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf'
+        if safe.get('ftp', {}).get('password', ''):
+            safe['ftp']['password'] = '\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf'
+        self.send_json({"ok": True, **safe})
+
+    def handle_post_sync_config(self):
+        try:
+            data = self.read_json_body()
+            metodo = data.get('metodo', 'nessuno')
+            if metodo not in ('nessuno', 'github', 'ftp'):
+                self.send_error_json(400, "Metodo non valido")
+                return
+
+            existing = load_sync_config() or {}
+            gh = data.get('github', {})
+            ftp_data = data.get('ftp', {})
+
+            mask = '\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf'
+            if gh.get('token', '') == mask:
+                gh['token'] = existing.get('github', {}).get('token', '')
+            if ftp_data.get('password', '') == mask:
+                ftp_data['password'] = existing.get('ftp', {}).get('password', '')
+
+            new_config = {
+                "metodo": metodo,
+                "github": {
+                    "token": gh.get('token', ''),
+                    "owner": gh.get('owner', ''),
+                    "repo": gh.get('repo', ''),
+                    "branch": gh.get('branch', 'main')
+                },
+                "ftp": {
+                    "host": ftp_data.get('host', ''),
+                    "porta": int(ftp_data.get('porta', 21)),
+                    "username": ftp_data.get('username', ''),
+                    "password": ftp_data.get('password', ''),
+                    "percorso_remoto": ftp_data.get('percorso_remoto', '/public_html'),
+                    "tls": bool(ftp_data.get('tls', True))
+                }
+            }
+
+            save_sync_config(new_config)
+            self.send_json({"ok": True, "messaggio": "Configurazione salvata"})
+            print(f"[OK] Configurazione sync salvata: metodo={metodo}")
+
+        except json.JSONDecodeError:
+            self.send_error_json(400, "JSON non valido")
+        except Exception as e:
+            self.send_error_json(500, f"Errore salvataggio configurazione: {e}")
+
+    def handle_sync_test(self):
+        try:
+            data = self.read_json_body()
+            metodo = data.get('metodo', 'nessuno')
+
+            existing = load_sync_config() or {}
+            mask = '\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf'
+
+            if metodo == 'github':
+                gh = data.get('github', {})
+                token = gh.get('token', '')
+                if token == mask:
+                    token = existing.get('github', {}).get('token', '')
+                owner = gh.get('owner', '').strip()
+                repo = gh.get('repo', '').strip()
+
+                if not token or not owner or not repo:
+                    self.send_error_json(400, "Token, owner e repository sono obbligatori")
+                    return
+
+                api_url = f'https://api.github.com/repos/{owner}/{repo}'
+                headers = {
+                    'Authorization': f'token {token}',
+                    'Accept': 'application/vnd.github.v3+json',
+                    'User-Agent': 'SitoAdmin/1.0'
+                }
+                try:
+                    req = urllib.request.Request(api_url, headers=headers, method='GET')
+                    with urllib.request.urlopen(req, timeout=15) as resp:
+                        repo_data = json.loads(resp.read().decode('utf-8'))
+                        repo_name = repo_data.get('full_name', f'{owner}/{repo}')
+                        self.send_json({"ok": True, "messaggio": f"Connessione riuscita a {repo_name}"})
+                        print(f"[OK] Test GitHub riuscito: {repo_name}")
+                except urllib.error.HTTPError as e:
+                    if e.code == 401:
+                        self.send_error_json(400, "Token non valido o scaduto")
+                    elif e.code == 404:
+                        self.send_error_json(400, f"Repository {owner}/{repo} non trovato")
+                    else:
+                        self.send_error_json(400, f"Errore GitHub: {e.code} {e.reason}")
+                except Exception as e:
+                    self.send_error_json(400, f"Errore connessione: {e}")
+
+            elif metodo == 'ftp':
+                ftp_data = data.get('ftp', {})
+                host = ftp_data.get('host', '').strip()
+                porta = int(ftp_data.get('porta', 21))
+                username = ftp_data.get('username', '').strip()
+                password = ftp_data.get('password', '')
+                if password == mask:
+                    password = existing.get('ftp', {}).get('password', '')
+                percorso = ftp_data.get('percorso_remoto', '/public_html').strip()
+                use_tls = bool(ftp_data.get('tls', True))
+
+                if not host or not username:
+                    self.send_error_json(400, "Host e username sono obbligatori")
+                    return
+
+                ftp = None
+                try:
+                    if use_tls:
+                        ftp = ftplib.FTP_TLS(timeout=15)
+                    else:
+                        ftp = ftplib.FTP(timeout=15)
+
+                    ftp.connect(host, porta)
+                    ftp.login(username, password)
+                    if use_tls:
+                        ftp.prot_p()
+                    if percorso:
+                        ftp.cwd(percorso)
+                    ftp.quit()
+                    self.send_json({"ok": True, "messaggio": f"Connessione FTP riuscita a {host}{percorso}"})
+                    print(f"[OK] Test FTP riuscito: {host}")
+                except ftplib.error_perm as e:
+                    self.send_error_json(400, f"Errore FTP: {e}")
+                except Exception as e:
+                    self.send_error_json(400, f"Errore connessione FTP: {e}")
+                finally:
+                    if ftp:
+                        try:
+                            ftp.close()
+                        except Exception:
+                            pass
+            else:
+                self.send_json({"ok": True, "messaggio": "Nessun metodo selezionato"})
+
+        except json.JSONDecodeError:
+            self.send_error_json(400, "JSON non valido")
+        except Exception as e:
+            self.send_error_json(500, f"Errore test connessione: {e}")
 
     # --- Utility ---
     def send_json(self, data):
