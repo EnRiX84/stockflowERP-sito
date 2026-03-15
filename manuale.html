@@ -221,7 +221,9 @@
                 <li><a href="#clienti">Clienti e Fidelity</a></li>
                 <li><a href="#report">Report</a></li>
                 <li><a href="#sms">SMS Marketing</a></li>
+                <li><a href="#sconti">Politica Sconti</a></li>
                 <li><a href="#utenti">Gestione Utenti</a></li>
+                <li><a href="#export-utenti">Export Utenti CSV</a></li>
                 <li><a href="#import-utenti">Import Utenti CSV</a></li>
                 <li><a href="#analytics">Analytics</a></li>
                 <ul class="sub">
@@ -327,6 +329,54 @@
                 <div class="tip">
                     <i class="fas fa-lightbulb"></i>
                     <span>Usa la <strong>ricerca per barcode</strong> (icona scanner) per trovare prodotti e varianti in modo istantaneo.</span>
+                </div>
+            </section>
+
+            <!-- =============== SCONTI =============== -->
+            <section id="sconti">
+                <h2><span class="icon" style="background: rgba(239,68,68,0.15); color: #F87171;"><i class="fas fa-tags"></i></span> Politica Sconti</h2>
+                <p>La sezione <strong>Sconti</strong> (<code>/discounts</code>) permette ad Admin e Manager di gestire gli sconti sui prodotti in modo centralizzato.</p>
+
+                <h3>Come funzionano gli sconti</h3>
+                <p>Il sistema prevede <strong>due livelli di sconto</strong> che lavorano insieme:</p>
+                <ol>
+                    <li><strong>Sconto prodotto</strong> (da Politica Sconti) &mdash; l'Admin/Manager imposta una percentuale di sconto su uno o pi&ugrave; prodotti. Il prezzo scontato viene pre-calcolato e mostrato ovunque nel catalogo.</li>
+                    <li><strong>Sconto manuale in cassa</strong> &mdash; il cassiere pu&ograve; applicare un ulteriore sconto al momento della vendita (10%, 20%, 30%, ecc.).</li>
+                </ol>
+
+                <h3>Applicare sconti in blocco</h3>
+                <ol>
+                    <li>Vai alla sezione <strong>Sconti</strong> dal menu laterale.</li>
+                    <li>Filtra i prodotti per <strong>brand</strong> o <strong>categoria</strong>.</li>
+                    <li>Seleziona i prodotti e imposta la <strong>percentuale di sconto</strong>.</li>
+                    <li>Puoi anche impostare <strong>date di inizio e fine</strong> per promozioni temporanee.</li>
+                </ol>
+
+                <h3>Attivare e disattivare singoli sconti</h3>
+                <p>Ogni prodotto con uno sconto impostato pu&ograve; essere <strong>attivato o disattivato</strong> individualmente tramite il toggle nella lista sconti. Un prodotto disattivato mantiene lo sconto configurato ma lo mostra a prezzo pieno in cassa.</p>
+
+                <h3>Protezioni</h3>
+                <ul>
+                    <li><strong>Sconto massimo consentito</strong>: percentuale massima applicabile manualmente in cassa (default: 50%). Configurabile nelle <a href="#impostazioni">Impostazioni Tenant</a>.</li>
+                    <li><strong>Blocco doppio sconto</strong>: se abilitato (default), il cassiere <strong>non pu&ograve;</strong> applicare uno sconto manuale aggiuntivo su un articolo gi&agrave; in saldo.</li>
+                </ul>
+
+                <div class="info">
+                    <i class="fas fa-circle-info"></i>
+                    <span>Gli sconti vengono applicati automaticamente al momento della vendita. Il cassiere vede il prezzo gi&agrave; scontato nel carrello e riceve avvisi visivi in caso di violazioni della politica.</span>
+                </div>
+
+                <h4>Chi pu&ograve; gestire gli sconti</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Azione</th><th><span class="tag tag-red">ADMIN</span></th><th><span class="tag tag-purple">MANAGER</span></th><th><span class="tag tag-blue">EMPLOYEE</span></th></tr></thead>
+                        <tbody>
+                            <tr><td>Applicare sconti in blocco</td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-xmark" style="color:var(--danger)"></i></td></tr>
+                            <tr><td>Attivare/disattivare sconti</td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-xmark" style="color:var(--danger)"></i></td></tr>
+                            <tr><td>Rimuovere sconti</td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-xmark" style="color:var(--danger)"></i></td></tr>
+                            <tr><td>Sconto manuale in cassa</td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td><td><i class="fas fa-check" style="color:var(--success)"></i></td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
 
@@ -474,6 +524,39 @@
                 </ol>
 
                 <p>Ogni utente pu&ograve; essere <strong>disattivato</strong> senza eliminarlo, mantenendo lo storico delle sue operazioni.</p>
+            </section>
+
+            <!-- =============== EXPORT UTENTI =============== -->
+            <section id="export-utenti">
+                <h2><span class="icon" style="background: rgba(13,148,136,0.15); color: var(--teal-light);"><i class="fas fa-file-export"></i></span> Export Utenti CSV</h2>
+                <p>L'amministratore pu&ograve; esportare l'elenco completo degli utenti in formato CSV, utile per <strong>backup</strong> o per re-importare dopo un reset del sistema.</p>
+
+                <h3>Come esportare</h3>
+                <ol>
+                    <li>Vai alla sezione <strong>Utenti</strong> dal menu laterale.</li>
+                    <li>Clicca il pulsante <strong>Esporta CSV</strong> (icona download).</li>
+                    <li>Il file <code>utenti_AAAA-MM-GG.csv</code> viene scaricato automaticamente.</li>
+                </ol>
+
+                <h3>Formato del file</h3>
+                <p>Il CSV esportato usa lo <strong>stesso formato dell'import</strong>, quindi pu&ograve; essere re-importato direttamente:</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Colonna</th><th>Descrizione</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>email</code></td><td>Email dell'utente</td></tr>
+                            <tr><td><code>nome</code></td><td>Nome</td></tr>
+                            <tr><td><code>cognome</code></td><td>Cognome</td></tr>
+                            <tr><td><code>ruolo</code></td><td>ADMIN, MANAGER o EMPLOYEE</td></tr>
+                            <tr><td><code>negozi</code></td><td>Codici negozio separati da virgola</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Esporta regolarmente gli utenti come backup. Dopo un reset del database, potrai reimportarli dalla funzione <a href="#import-utenti">Import Utenti CSV</a>. Le password verranno rigenerate automaticamente.</span>
+                </div>
             </section>
 
             <!-- =============== IMPORT UTENTI =============== -->
@@ -631,6 +714,16 @@
                     <li><strong>Stato</strong>: Attivo o Sospeso</li>
                 </ul>
 
+                <h4>Creare un nuovo tenant</h4>
+                <p>Clicca il pulsante <strong>Nuovo Tenant</strong> per aprire il form di creazione. Compila:</p>
+                <ol>
+                    <li><strong>Nome Azienda</strong>: il nome del cliente (es. "Grandi Firme di Fuca"). Lo slug viene generato automaticamente.</li>
+                    <li><strong>Piano</strong>: Free, Starter, Business o Enterprise. I limiti (negozi, utenti, prodotti) si adattano automaticamente al piano scelto.</li>
+                    <li><strong>Dominio</strong> (opzionale): il dominio del sito del cliente.</li>
+                    <li><strong>Dati Admin</strong>: nome, cognome, email e password dell'utente amministratore del tenant.</li>
+                </ol>
+                <p>Alla creazione, il sistema genera automaticamente <strong>30 brand</strong> e <strong>29 categorie</strong> predefinite per il nuovo tenant.</p>
+
                 <h4>Azioni disponibili per ogni tenant</h4>
                 <div class="table-wrap">
                     <table>
@@ -735,22 +828,22 @@
                             <tr>
                                 <td><span class="tag tag-orange">SUPERADMIN</span></td>
                                 <td>Amministratore piattaforma</td>
-                                <td>Gestione tutti i tenant, impersonation, statistiche globali, configurazione SMTP/branding/Stripe</td>
+                                <td>Creazione e gestione tenant, impersonation, statistiche globali, configurazione SMTP/branding/Stripe, feature flags</td>
                             </tr>
                             <tr>
                                 <td><span class="tag tag-red">ADMIN</span></td>
                                 <td>Amministratore del tenant</td>
-                                <td>Tutto all'interno del proprio tenant: utenti, negozi, prodotti, vendite, gift card, report, impostazioni</td>
+                                <td>Tutto all'interno del proprio tenant: utenti (export/import CSV), negozi, prodotti, politica sconti, vendite, gift card, report, impostazioni, analytics</td>
                             </tr>
                             <tr>
                                 <td><span class="tag tag-purple">MANAGER</span></td>
                                 <td>Responsabile negozio</td>
-                                <td>Prodotti, movimenti, trasferimenti, vendite, report, clienti</td>
+                                <td>Prodotti, politica sconti, movimenti, trasferimenti, vendite, report, clienti</td>
                             </tr>
                             <tr>
                                 <td><span class="tag tag-blue">EMPLOYEE</span></td>
                                 <td>Dipendente</td>
-                                <td>Visualizzazione prodotti, carico/scarico, vendite</td>
+                                <td>Visualizzazione prodotti, carico/scarico, vendite (con sconti manuali entro i limiti della politica)</td>
                             </tr>
                         </tbody>
                     </table>
